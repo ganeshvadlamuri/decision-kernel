@@ -1,0 +1,24 @@
+task: "pick and place"
+description: "Pick up an object and place it at a target location"
+
+skill:
+  name: "pick_and_place"
+  description: "Pick object from source and place at destination"
+  inputs:
+    object: "object to manipulate"
+    destination: "target location"
+  preconditions:
+    - "object exists"
+    - "object is graspable"
+    - "destination is reachable"
+  effects:
+    - "object at destination"
+  action_sequence:
+    - type: "navigate_to"
+      location: "{object_location}"
+    - type: "grasp"
+      target: "{object}"
+    - type: "navigate_to"
+      location: "{destination}"
+    - type: "release"
+      target: "{object}"

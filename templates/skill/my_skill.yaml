@@ -1,0 +1,24 @@
+task: "my custom task"
+description: "Description of what this skill accomplishes"
+
+skill:
+  name: "my_skill"
+  description: "Detailed description of the skill behavior"
+  inputs:
+    target: "object to manipulate"
+    destination: "target location"
+  preconditions:
+    - "target exists"
+    - "target is reachable"
+    - "destination is valid"
+  effects:
+    - "target at destination"
+  action_sequence:
+    - type: "navigate_to"
+      location: "{target_location}"
+    - type: "grasp"
+      target: "{target}"
+    - type: "navigate_to"
+      location: "{destination}"
+    - type: "release"
+      target: "{target}"

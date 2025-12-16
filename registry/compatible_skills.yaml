@@ -1,0 +1,12 @@
+# Decision Kernel Compatible Skills
+#
+# Submit your skill via PR!
+# See decision-kernel-ecosystem-kit/PUBLISHING.md for guidelines
+
+skills:
+  - name: bring-water
+    description: Bring water to human
+    repository: https://github.com/decision-kernel/decision-kernel
+    intent_pattern: "bring {target}"
+    version: "1.0"
+    maintainer: Decision Kernel Team

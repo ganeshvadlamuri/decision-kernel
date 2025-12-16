@@ -1,0 +1,5 @@
+task: "clean the room"
+description: "Navigate to target room and perform cleaning"
+expected_actions:
+  - navigate_to: room
+  - clean_area: room

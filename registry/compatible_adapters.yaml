@@ -1,0 +1,32 @@
+# Decision Kernel Compatible Adapters
+#
+# Submit your adapter via PR!
+# See decision-kernel-ecosystem-kit/PUBLISHING.md for guidelines
+
+adapters:
+  - name: decision-kernel-ros2
+    description: ROS2 translation layer for Decision Kernel
+    repository: https://github.com/decision-kernel/decision-kernel-ros2
+    conformance: "python -m decision_kernel_conformance decision_kernel_ros2.adapter.ROS2Adapter"
+    hardware: ros2
+    version: "1.0"
+    maintainer: Decision Kernel Team
+    status: reference
+
+  - name: decision-kernel-webots
+    description: Webots simulator adapter for Decision Kernel
+    repository: https://github.com/decision-kernel/decision-kernel-webots
+    conformance: "python -m decision_kernel_conformance decision_kernel_webots.adapter.WebotsAdapter"
+    hardware: webots
+    version: "1.0"
+    maintainer: Decision Kernel Team
+    status: reference
+
+  - name: mock-robot
+    description: Built-in testing adapter
+    repository: https://github.com/decision-kernel/decision-kernel
+    conformance: "python -m decision_kernel_conformance adapters.mock.mock_robot.MockRobot"
+    hardware: simulation
+    version: "1.0"
+    maintainer: Decision Kernel Team
+    status: reference

@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decision-kernel-webots"
+version = "1.0.0"
+description = "Webots adapter for Decision Kernel"
+requires-python = ">=3.10"
+dependencies = [
+    "decision-kernel>=0.7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]

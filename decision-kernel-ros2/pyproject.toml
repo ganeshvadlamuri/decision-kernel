@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decision-kernel-ros2"
+version = "1.0.0"
+description = "ROS2 adapter for Decision Kernel"
+requires-python = ">=3.10"
+dependencies = [
+    "decision-kernel>=0.5.0",
+]
+
+[project.optional-dependencies]
+ros2 = [
+    "rclpy",
+]
+dev = [
+    "pytest>=7.0",
+]

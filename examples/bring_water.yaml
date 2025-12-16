@@ -1,0 +1,7 @@
+task: "bring me water"
+description: "Navigate to kitchen, grasp water container, return to human"
+expected_actions:
+  - navigate_to: kitchen
+  - grasp: water
+  - navigate_to: human
+  - release: water

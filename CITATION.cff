@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "If you use Decision Kernel in your research, please cite it as below."
+title: "Decision Kernel: A Hardware-Agnostic Decision Interface for Robots"
+version: 0.8.0
+date-released: 2024-02-20
+url: "https://github.com/decision-kernel/decision-kernel"
+repository-code: "https://github.com/decision-kernel/decision-kernel"
+license: Apache-2.0
+type: software
+authors:
+  - name: "Decision Kernel Contributors"
+    website: "https://github.com/decision-kernel/decision-kernel"
+keywords:
+  - robotics
+  - decision-making
+  - planning
+  - hardware-agnostic
+  - middleware-neutral
+  - robot-software
+  - orchestration
+abstract: "Decision Kernel is a minimal orchestration layer that separates decision logic from hardware execution in robotic systems. It provides a stable interface between human intent and robot actions, enabling hardware-agnostic planning while delegating perception, motion planning, and control to existing subsystems."
+references:
+  - type: documentation
+    title: "Decision Kernel Documentation"
+    url: "https://github.com/decision-kernel/decision-kernel/tree/main/docs"
+  - type: whitepaper
+    title: "Decision Kernel: A Hardware-Agnostic Decision Interface for Robots"
+    url: "https://github.com/decision-kernel/decision-kernel/blob/main/docs/papers/decision_kernel_whitepaper.md"
