@@ -11,19 +11,19 @@ class IntentParser:
         # Complex tasks
         if "make coffee" in text or "brew coffee" in text:
             return Goal(action="make_coffee", target="coffee")
-        
+
         if "deliver" in text and "package" in text:
             location = self._extract_location(text)
             return Goal(action="deliver_package", location=location)
-        
+
         if "monitor" in text:
             location = self._extract_location(text)
             return Goal(action="monitor_area", location=location)
-        
+
         # Emergency commands
         if "fire" in text and ("emergency" in text or "detected" in text):
             return Goal(action="emergency_fire")
-        
+
         if "intrusion" in text and ("emergency" in text or "detected" in text):
             return Goal(action="emergency_intrusion")
 

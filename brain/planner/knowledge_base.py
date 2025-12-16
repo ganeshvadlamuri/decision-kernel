@@ -1,8 +1,7 @@
 """Knowledge base for learning from failures and storing behavioral patterns"""
+import json
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Dict, List
-import json
 
 
 @dataclass
@@ -26,7 +25,7 @@ class LearnedBehavior:
     success_count: int = 0
     failure_count: int = 0
     avg_execution_time: float = 0.0
-    
+
     @property
     def success_rate(self) -> float:
         total = self.success_count + self.failure_count
@@ -35,16 +34,16 @@ class LearnedBehavior:
 
 class KnowledgeBase:
     """Store and retrieve learned behaviors and failure patterns"""
-    
+
     def __init__(self, persistence_path: str | None = None):
-        self.failure_patterns: Dict[str, FailurePattern] = {}
-        self.learned_behaviors: List[LearnedBehavior] = []
-        self.context_preferences: Dict[str, dict] = {}
+        self.failure_patterns: dict[str, FailurePattern] = {}
+        self.learned_behaviors: list[LearnedBehavior] = []
+        self.context_preferences: dict[str, dict] = {}
         self.persistence_path = persistence_path
-        
+
         if persistence_path:
             self.load()
-    
+
     def record_failure(
         self,
         action_type: str,
@@ -55,12 +54,12 @@ class KnowledgeBase:
     ):
         """Record a failure occurrence"""
         key = f"{action_type}:{failure_reason}"
-        
+
         if key in self.failure_patterns:
             pattern = self.failure_patterns[key]
             pattern.occurrences += 1
             pattern.last_seen = datetime.now()
-            
+
             if recovery_successful and recovery_strategy:
                 pattern.successful_recovery = recovery_strategy
                 # Update success rate
@@ -74,18 +73,18 @@ class KnowledgeBase:
                 successful_recovery=recovery_strategy if recovery_successful else None,
                 recovery_success_rate=1.0 if recovery_successful else 0.0
             )
-    
+
     def get_best_recovery(self, action_type: str, failure_reason: str) -> str | None:
         """Get most successful recovery strategy for a failure"""
         key = f"{action_type}:{failure_reason}"
-        
+
         if key in self.failure_patterns:
             pattern = self.failure_patterns[key]
             if pattern.recovery_success_rate > 0.5:  # >50% success rate
                 return pattern.successful_recovery
-        
+
         return None
-    
+
     def record_behavior(
         self,
         goal_type: str,
@@ -101,13 +100,13 @@ class KnowledgeBase:
             if behavior.goal_type == goal_type and self._context_matches(behavior.context_conditions, context):
                 matching = behavior
                 break
-        
+
         if matching:
             if success:
                 matching.success_count += 1
             else:
                 matching.failure_count += 1
-            
+
             # Update average execution time
             total_executions = matching.success_count + matching.failure_count
             matching.avg_execution_time = (
@@ -123,33 +122,33 @@ class KnowledgeBase:
                 failure_count=0 if success else 1,
                 avg_execution_time=execution_time
             ))
-    
+
     def get_best_behavior(self, goal_type: str, context: dict) -> LearnedBehavior | None:
         """Get most successful behavior for goal in given context"""
         candidates = [
             b for b in self.learned_behaviors
             if b.goal_type == goal_type and self._context_matches(b.context_conditions, context)
         ]
-        
+
         if not candidates:
             return None
-        
+
         # Sort by success rate, then by execution count
         candidates.sort(
             key=lambda b: (b.success_rate, b.success_count + b.failure_count),
             reverse=True
         )
-        
+
         return candidates[0] if candidates[0].success_rate > 0.3 else None
-    
+
     def update_context_preference(self, context_key: str, preference: dict):
         """Store context-specific preferences (time of day, battery level, etc.)"""
         self.context_preferences[context_key] = preference
-    
+
     def get_context_preference(self, context_key: str) -> dict | None:
         """Retrieve context-specific preference"""
         return self.context_preferences.get(context_key)
-    
+
     def get_failure_statistics(self) -> dict:
         """Get statistics about failures"""
         stats = {
@@ -157,7 +156,7 @@ class KnowledgeBase:
             'most_common': [],
             'best_recoveries': []
         }
-        
+
         # Most common failures
         sorted_patterns = sorted(
             self.failure_patterns.values(),
@@ -172,7 +171,7 @@ class KnowledgeBase:
             }
             for p in sorted_patterns[:5]
         ]
-        
+
         # Best recovery strategies
         recoverable = [p for p in self.failure_patterns.values() if p.successful_recovery]
         recoverable.sort(key=lambda p: p.recovery_success_rate, reverse=True)
@@ -185,9 +184,9 @@ class KnowledgeBase:
             }
             for p in recoverable[:5]
         ]
-        
+
         return stats
-    
+
     def get_behavior_statistics(self) -> dict:
         """Get statistics about learned behaviors"""
         return {
@@ -202,25 +201,25 @@ class KnowledgeBase:
                 for b in sorted(self.learned_behaviors, key=lambda b: b.success_rate, reverse=True)[:5]
             ]
         }
-    
+
     def _context_matches(self, stored_context: dict, current_context: dict) -> bool:
         """Check if contexts match (fuzzy matching)"""
         if not stored_context:
             return True
-        
+
         matches = 0
         for key, value in stored_context.items():
             if key in current_context and current_context[key] == value:
                 matches += 1
-        
+
         # At least 70% of stored context must match
         return matches / len(stored_context) >= 0.7 if stored_context else True
-    
+
     def save(self):
         """Persist knowledge base to disk"""
         if not self.persistence_path:
             return
-        
+
         data = {
             'failure_patterns': {
                 k: {
@@ -247,19 +246,19 @@ class KnowledgeBase:
             ],
             'context_preferences': self.context_preferences
         }
-        
+
         with open(self.persistence_path, 'w') as f:
             json.dump(data, f, indent=2)
-    
+
     def load(self):
         """Load knowledge base from disk"""
         if not self.persistence_path:
             return
-        
+
         try:
-            with open(self.persistence_path, 'r') as f:
+            with open(self.persistence_path) as f:
                 data = json.load(f)
-            
+
             # Load failure patterns
             for k, v in data.get('failure_patterns', {}).items():
                 self.failure_patterns[k] = FailurePattern(
@@ -271,7 +270,7 @@ class KnowledgeBase:
                     successful_recovery=v.get('successful_recovery'),
                     recovery_success_rate=v.get('recovery_success_rate', 0.0)
                 )
-            
+
             # Load learned behaviors
             for b in data.get('learned_behaviors', []):
                 self.learned_behaviors.append(LearnedBehavior(
@@ -282,9 +281,9 @@ class KnowledgeBase:
                     failure_count=b['failure_count'],
                     avg_execution_time=b['avg_execution_time']
                 ))
-            
+
             # Load context preferences
             self.context_preferences = data.get('context_preferences', {})
-            
+
         except FileNotFoundError:
             pass  # Fresh start
