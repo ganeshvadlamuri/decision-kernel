@@ -1,0 +1,59 @@
+name: Compatibility Matrix
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  generate-matrix:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -e ".[dev]"
+    
+    - name: Run conformance on MockRobot
+      run: |
+        python -m decision_kernel_conformance adapters.mock.mock_robot.MockRobot --cert
+    
+    - name: Generate compatibility matrix
+      run: |
+        python tools/generate_compatibility_matrix.py
+    
+    - name: Verify matrix generated
+      run: |
+        if [ ! -f docs/compatibility_matrix.md ]; then
+          echo "Error: compatibility_matrix.md not generated"
+          exit 1
+        fi
+        echo "Compatibility matrix generated successfully"
+    
+    - name: Verify certificates generated
+      run: |
+        if [ ! -d certificates ]; then
+          echo "Error: certificates directory not created"
+          exit 1
+        fi
+        echo "Certificates generated successfully"
+    
+    - name: Upload certificates
+      uses: actions/upload-artifact@v4
+      with:
+        name: conformance-certificates
+        path: certificates/
+    
+    - name: Upload compatibility matrix
+      uses: actions/upload-artifact@v4
+      with:
+        name: compatibility-matrix
+        path: docs/compatibility_matrix.md

@@ -22,6 +22,15 @@ adapters:
     maintainer: Decision Kernel Team
     status: reference
 
+  - name: decision-kernel-pybullet
+    description: PyBullet physics simulator adapter for Decision Kernel
+    repository: https://github.com/decision-kernel/decision-kernel-pybullet
+    conformance: "python -m decision_kernel_conformance decision_kernel_pybullet.adapter.PyBulletAdapter"
+    hardware: pybullet
+    version: "1.0"
+    maintainer: Decision Kernel Team
+    status: reference
+
   - name: mock-robot
     description: Built-in testing adapter
     repository: https://github.com/decision-kernel/decision-kernel

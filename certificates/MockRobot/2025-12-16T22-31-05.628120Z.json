@@ -1,0 +1,38 @@
+{
+  "adapter": "adapters.mock.mock_robot.MockRobot",
+  "adapter_name": "MockRobot",
+  "kernel_version": "0.9.0",
+  "action_spec_version": "1.0",
+  "worldstate_spec_version": "1.0",
+  "adapter_contract_version": "1.0",
+  "timestamp": "2025-12-16T22:31:05.628120Z",
+  "conformance_command": "python -m decision_kernel_conformance adapters.mock.mock_robot.MockRobot",
+  "source_hash": "371cd0523bd58f1562de945f6fb89ffa3f1005ef2f9bfa78cf0ad3ddc9acaa18",
+  "results": {
+    "passed": 4,
+    "total": 4,
+    "status": "PASS",
+    "tests": [
+      {
+        "name": "Method presence",
+        "passed": true,
+        "message": "All methods present"
+      },
+      {
+        "name": "sense() contract",
+        "passed": true,
+        "message": "sense() returns valid WorldState"
+      },
+      {
+        "name": "execute() contract",
+        "passed": true,
+        "message": "execute() returns valid ExecutionReport"
+      },
+      {
+        "name": "capabilities() contract",
+        "passed": true,
+        "message": "capabilities() returns valid dict"
+      }
+    ]
+  }
+}

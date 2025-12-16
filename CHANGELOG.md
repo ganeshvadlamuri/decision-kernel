@@ -5,6 +5,51 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0] - 2024-12-16
+
+### Released - Stability Milestone
+
+Decision Kernel v1.0.0 formalizes the stability guaranteed since v0.9.
+
+**This release introduces no behavioral changes.**
+
+### What v1.0.0 Means
+
+- Core kernel is frozen
+- Specifications are frozen (Action v1.0, WorldState v1.0, Adapter Contract v1.0)
+- Compatibility guarantees are active
+- 10+ year interface stability commitment
+- Safe to build long-lived systems on
+
+### Multi-Environment Proof
+
+- ROS2 (middleware)
+- Webots (simulation)
+- PyBullet (physics)
+- Mock (testing)
+
+### Automated Evidence
+
+- Conformance certificates generated automatically
+- Compatibility matrix published
+- CI enforces conformance
+
+### Post-v1.0 Policy
+
+- Core changes require extraordinary consensus
+- Default response to feature requests: "Out of scope. Core is frozen."
+- Extensions via adapters, skills, tooling only
+- Bug fixes, security patches, documentation allowed
+
+### Technical Status
+
+- All tests passing (57/57)
+- Zero kernel modifications since v0.9
+- Zero breaking changes
+- Stable, boring, dependable
+
+**This is a ceremonial release marking transition from development to long-term standard stewardship.**
+
 ## [0.9.x → v1.0 Candidate] - 2024-02-28
 
 ### Status: v1.0 Candidate

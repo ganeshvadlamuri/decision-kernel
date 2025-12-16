@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=65.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "decision-kernel-pybullet"
+version = "1.0.0"
+description = "PyBullet adapter for Decision Kernel"
+requires-python = ">=3.10"
+dependencies = [
+    "decision-kernel>=0.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+]

@@ -11,15 +11,13 @@ A minimal, hardware-agnostic robot brain kernel for autonomous decision-making.
 > **Decision Kernel is infrastructure, not a product.**  
 > It is vendor-neutral, hardware-agnostic, and community-driven.
 
-## v1.0 Candidate Status
+## v1.0 Released
 
-**Decision Kernel is feature-complete and frozen.**
+**Decision Kernel v1.0.0 is stable, frozen infrastructure.**
 
-Core, specifications, and contracts are immutable. v1.0 will be released upon adoption milestones (education, research, industry). Stability guarantees are active now.
+Core, specifications, and contracts are immutable. This release formalizes the stability guaranteed since v0.9. No behavioral changes.
 
-**What remains**: External validation, not technical work.
-
-**See**: [v1.0 Candidate](docs/v1_candidate.md) | [Roadmap](docs/roadmap.md)
+**See**: [v1.0 Definition](docs/v1_definition.md) | [Freeze Policy](docs/v1_freeze.md) | [Roadmap](docs/roadmap.md)
 
 ## v1.0 Stability Commitment
 
