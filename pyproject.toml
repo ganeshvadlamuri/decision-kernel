@@ -18,6 +18,9 @@ dev = [
     "mypy>=1.0",
 ]
 
+[tool.setuptools.packages.find]
+include = ["brain*", "adapters*", "cli*", "decision_kernel_conformance*"]
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"
