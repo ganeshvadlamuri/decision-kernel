@@ -93,8 +93,9 @@ class HTNPlanner:
                 actions.extend(self._decompose_recursive(subtask, state, params))
             elif isinstance(subtask, dict):
                 sub_name = subtask.get('task')
-                sub_params = {**params, **subtask.get('params', {})}
-                actions.extend(self._decompose_recursive(sub_name, state, sub_params))
+                if sub_name:
+                    sub_params = {**params, **subtask.get('params', {})}
+                    actions.extend(self._decompose_recursive(sub_name, state, sub_params))
 
         return actions
 
