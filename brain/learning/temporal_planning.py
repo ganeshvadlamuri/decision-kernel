@@ -1,7 +1,7 @@
 """Temporal Paradox Resolution - Plan backwards from desired future state."""
 from dataclasses import dataclass
 from datetime import datetime, timedelta
-from typing import List, Optional
+
 from brain.planner.actions import Action
 
 
@@ -10,15 +10,15 @@ class TimedAction:
     action: Action
     start_time: datetime
     duration: timedelta
-    dependencies: List[str]
+    dependencies: list[str]
 
 
 @dataclass
 class TemporalPlan:
-    actions: List[TimedAction]
+    actions: list[TimedAction]
     start_time: datetime
     end_time: datetime
-    critical_path: List[str]
+    critical_path: list[str]
 
 
 class TemporalPlanner:
@@ -34,12 +34,12 @@ class TemporalPlanner:
             "scan": timedelta(seconds=5),
             "charge": timedelta(minutes=30)
         }
-    
+
     def reverse_temporal_planning(
-        self, 
-        desired_state: str, 
+        self,
+        desired_state: str,
         desired_time: datetime,
-        current_state: Optional[str] = None
+        current_state: str | None = None
     ) -> TemporalPlan:
         """Plan backwards from desired future state."""
         # Parse desired state to extract goal
@@ -49,7 +49,7 @@ class TemporalPlanner:
             return self._plan_package_delivery(desired_time)
         else:
             return self._plan_generic_task(desired_state, desired_time)
-    
+
     def _plan_coffee_delivery(self, desired_time: datetime) -> TemporalPlan:
         """Plan coffee delivery working backwards from deadline."""
         actions_reverse = [
@@ -62,31 +62,31 @@ class TemporalPlanner:
             ("heat_water", "water", None, ["brew_coffee"]),
             ("navigate", None, "kitchen", ["grind_beans", "heat_water"])
         ]
-        
+
         # Calculate backwards from desired_time
         current_time = desired_time
         timed_actions = []
-        
+
         for action_name, target, location, deps in actions_reverse:
             duration = self.action_durations.get(action_name, timedelta(minutes=1))
             start_time = current_time - duration
-            
+
             timed_actions.insert(0, TimedAction(
                 action=Action(action_type=action_name, target=target, location=location, parameters={}),
                 start_time=start_time,
                 duration=duration,
                 dependencies=deps
             ))
-            
+
             current_time = start_time
-        
+
         return TemporalPlan(
             actions=timed_actions,
             start_time=timed_actions[0].start_time,
             end_time=desired_time,
             critical_path=[ta.action.action_type for ta in timed_actions]
         )
-    
+
     def _plan_package_delivery(self, desired_time: datetime) -> TemporalPlan:
         """Plan package delivery working backwards."""
         actions_reverse = [
@@ -95,78 +95,78 @@ class TemporalPlanner:
             ("grasp", "package", None, ["navigate"]),
             ("navigate", None, "package_location", ["grasp"])
         ]
-        
+
         current_time = desired_time
         timed_actions = []
-        
+
         for action_name, target, location, deps in actions_reverse:
             duration = self.action_durations.get(action_name, timedelta(minutes=1))
             start_time = current_time - duration
-            
+
             timed_actions.insert(0, TimedAction(
                 action=Action(action_type=action_name, target=target, location=location, parameters={}),
                 start_time=start_time,
                 duration=duration,
                 dependencies=deps
             ))
-            
+
             current_time = start_time
-        
+
         return TemporalPlan(
             actions=timed_actions,
             start_time=timed_actions[0].start_time,
             end_time=desired_time,
             critical_path=[ta.action.action_type for ta in timed_actions]
         )
-    
+
     def _plan_generic_task(self, desired_state: str, desired_time: datetime) -> TemporalPlan:
         """Generic temporal planning."""
         action = Action(action_type="achieve", target=desired_state, parameters={})
         duration = timedelta(minutes=10)
         start_time = desired_time - duration
-        
+
         timed_action = TimedAction(
             action=action,
             start_time=start_time,
             duration=duration,
             dependencies=[]
         )
-        
+
         return TemporalPlan(
             actions=[timed_action],
             start_time=start_time,
             end_time=desired_time,
             critical_path=["achieve"]
         )
-    
+
     def optimize_timeline(self, plan: TemporalPlan) -> TemporalPlan:
         """Compress timeline by parallelizing independent actions."""
         # Find actions that can run in parallel
         optimized_actions = []
         time_saved = timedelta(0)
-        
+
         for i, action in enumerate(plan.actions):
             if i > 0 and not action.dependencies:
                 # Can run in parallel with previous action
                 prev_action = optimized_actions[-1]
                 action.start_time = prev_action.start_time
                 time_saved += action.duration
-            
+
             optimized_actions.append(action)
-        
+
         new_end_time = plan.end_time - time_saved
-        
+
         return TemporalPlan(
             actions=optimized_actions,
             start_time=plan.start_time,
             end_time=new_end_time,
             critical_path=plan.critical_path
         )
-    
-    def detect_conflicts(self, plan: TemporalPlan) -> List[str]:
+
+    def detect_conflicts(self, plan: TemporalPlan) -> list[str]:
         """Detect temporal conflicts in plan."""
         conflicts = []
-        
+
         for i, action1 in enumerate(plan.actions):
             for action2 in plan.actions[i+1:]:
                 # Check for time overlap
@@ -174,5 +174,5 @@ class TemporalPlanner:
                     conflicts.append(
                         f"Conflict: {action1.action.action_type} and {action2.action.action_type} overlap"
                     )
-        
+
         return conflicts

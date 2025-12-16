@@ -1,6 +1,6 @@
 """Negotiation Engine - Robot negotiates with humans when goals conflict."""
 from dataclasses import dataclass
-from typing import List, Dict, Any, Optional
+from typing import Any
 
 
 @dataclass
@@ -30,29 +30,29 @@ class NegotiationResult:
 
 class NegotiationEngine:
     def __init__(self):
-        self.negotiation_history: List[NegotiationResult] = []
+        self.negotiation_history: list[NegotiationResult] = []
         self.negotiation_count = 0
-    
-    def negotiate_with_human(self, human_request: str, 
+
+    def negotiate_with_human(self, human_request: str,
                             robot_constraint: str,
-                            context: Dict[str, Any] = None) -> NegotiationResult:
+                            context: dict[str, Any] = None) -> NegotiationResult:
         """Negotiate when human request conflicts with robot constraints."""
         context = context or {}
-        
+
         # Analyze constraints
         human_constraint = self._analyze_human_need(human_request, context)
         robot_needs = self._analyze_robot_constraint(robot_constraint, context)
-        
+
         # Generate proposals
-        proposals = self._generate_proposals(human_request, robot_constraint, 
+        proposals = self._generate_proposals(human_request, robot_constraint,
                                             human_constraint, robot_needs, context)
-        
+
         # Select best proposal
         best_proposal = self._select_best_proposal(proposals)
-        
+
         # Simulate negotiation rounds
         rounds = self._simulate_negotiation(human_constraint, robot_needs, best_proposal)
-        
+
         result = NegotiationResult(
             agreed=True,
             final_proposal=best_proposal.description,
@@ -60,16 +60,16 @@ class NegotiationEngine:
             human_satisfaction=best_proposal.human_satisfaction,
             negotiation_rounds=rounds
         )
-        
+
         self.negotiation_history.append(result)
         self.negotiation_count += 1
-        
+
         return result
-    
-    def _analyze_human_need(self, request: str, context: Dict[str, Any]) -> Constraint:
+
+    def _analyze_human_need(self, request: str, context: dict[str, Any]) -> Constraint:
         """Analyze human's need and urgency."""
         request_lower = request.lower()
-        
+
         if "now" in request_lower or "immediately" in request_lower:
             return Constraint(
                 type="urgency",
@@ -98,11 +98,11 @@ class NegotiationEngine:
                 severity=0.5,
                 negotiable=True
             )
-    
-    def _analyze_robot_constraint(self, constraint: str, context: Dict[str, Any]) -> Constraint:
+
+    def _analyze_robot_constraint(self, constraint: str, context: dict[str, Any]) -> Constraint:
         """Analyze robot's constraint."""
         constraint_lower = constraint.lower()
-        
+
         if "battery" in constraint_lower or "low_battery" in constraint_lower:
             battery_level = context.get("battery_level", 5)
             return Constraint(
@@ -132,13 +132,13 @@ class NegotiationEngine:
                 severity=0.5,
                 negotiable=True
             )
-    
+
     def _generate_proposals(self, human_request: str, robot_constraint: str,
                            human_need: Constraint, robot_need: Constraint,
-                           context: Dict[str, Any]) -> List[Proposal]:
+                           context: dict[str, Any]) -> list[Proposal]:
         """Generate negotiation proposals."""
         proposals = []
-        
+
         # Proposal 1: Partial fulfillment
         if robot_need.type == "battery":
             proposals.append(Proposal(
@@ -147,7 +147,7 @@ class NegotiationEngine:
                 human_satisfaction=0.6,
                 compromise_level=0.5
             ))
-        
+
         # Proposal 2: Delayed fulfillment
         if robot_need.negotiable:
             delay_time = "30 minutes" if robot_need.severity > 0.7 else "15 minutes"
@@ -157,7 +157,7 @@ class NegotiationEngine:
                 human_satisfaction=0.5,
                 compromise_level=0.4
             ))
-        
+
         # Proposal 3: Alternative solution
         if "clean" in human_request.lower():
             proposals.append(Proposal(
@@ -166,7 +166,7 @@ class NegotiationEngine:
                 human_satisfaction=0.7,
                 compromise_level=0.6
             ))
-        
+
         # Proposal 4: Immediate action with limitations
         proposals.append(Proposal(
             description=f"I'll {human_request.lower()} immediately, but may need to pause for {robot_constraint}",
@@ -174,7 +174,7 @@ class NegotiationEngine:
             human_satisfaction=0.8,
             compromise_level=0.7
         ))
-        
+
         # Proposal 5: Request human help
         if robot_need.type == "battery":
             proposals.append(Proposal(
@@ -183,10 +183,10 @@ class NegotiationEngine:
                 human_satisfaction=0.8,
                 compromise_level=0.3
             ))
-        
+
         return proposals
-    
-    def _select_best_proposal(self, proposals: List[Proposal]) -> Proposal:
+
+    def _select_best_proposal(self, proposals: list[Proposal]) -> Proposal:
         """Select proposal that maximizes joint satisfaction."""
         if not proposals:
             return Proposal(
@@ -195,33 +195,33 @@ class NegotiationEngine:
                 human_satisfaction=0.5,
                 compromise_level=0.5
             )
-        
+
         # Score = (human_satisfaction + robot_satisfaction) / 2
         best = max(proposals, key=lambda p: (p.human_satisfaction + p.robot_satisfaction) / 2)
         return best
-    
-    def _simulate_negotiation(self, human_need: Constraint, 
+
+    def _simulate_negotiation(self, human_need: Constraint,
                              robot_need: Constraint, proposal: Proposal) -> int:
         """Simulate negotiation rounds."""
         if not human_need.negotiable and not robot_need.negotiable:
             return 1  # Quick agreement or rejection
-        
+
         if proposal.compromise_level < 0.3:
             return 1  # Easy agreement
         elif proposal.compromise_level < 0.6:
             return 2  # Some discussion
         else:
             return 3  # Extended negotiation
-    
-    def get_negotiation_stats(self) -> Dict[str, Any]:
+
+    def get_negotiation_stats(self) -> dict[str, Any]:
         """Get negotiation statistics."""
         if not self.negotiation_history:
             return {"negotiations": 0}
-        
+
         avg_robot_sat = sum(n.robot_satisfaction for n in self.negotiation_history) / len(self.negotiation_history)
         avg_human_sat = sum(n.human_satisfaction for n in self.negotiation_history) / len(self.negotiation_history)
         avg_rounds = sum(n.negotiation_rounds for n in self.negotiation_history) / len(self.negotiation_history)
-        
+
         return {
             "total_negotiations": self.negotiation_count,
             "successful_negotiations": sum(1 for n in self.negotiation_history if n.agreed),

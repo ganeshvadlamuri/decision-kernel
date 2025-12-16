@@ -1,33 +1,34 @@
 """Skill Synthesis - Combines existing skills to create new ones automatically."""
 from dataclasses import dataclass
-from typing import List, Dict, Any, Set
+from typing import Any
+
 from brain.planner.actions import Action
 
 
 @dataclass
 class Skill:
     name: str
-    actions: List[Action]
-    preconditions: List[str]
-    effects: List[str]
+    actions: list[Action]
+    preconditions: list[str]
+    effects: list[str]
     complexity: int
 
 
 @dataclass
 class SynthesizedSkill:
     name: str
-    parent_skills: List[str]
-    actions: List[Action]
+    parent_skills: list[str]
+    actions: list[Action]
     novelty_score: float
     usefulness_score: float
 
 
 class SkillSynthesizer:
     def __init__(self):
-        self.known_skills: Dict[str, Skill] = {}
-        self.synthesized_skills: Dict[str, SynthesizedSkill] = {}
+        self.known_skills: dict[str, Skill] = {}
+        self.synthesized_skills: dict[str, SynthesizedSkill] = {}
         self._initialize_base_skills()
-    
+
     def _initialize_base_skills(self):
         """Initialize base skills library."""
         self.known_skills = {
@@ -89,25 +90,25 @@ class SkillSynthesizer:
                 complexity=1
             )
         }
-    
-    def combine(self, skill_names: List[str], goal: str = None) -> SynthesizedSkill:
+
+    def combine(self, skill_names: list[str], goal: str = None) -> SynthesizedSkill:
         """Combine existing skills to create a new one."""
         # Validate skills exist
         skills = [self.known_skills[name] for name in skill_names if name in self.known_skills]
-        
+
         if len(skills) < 2:
             raise ValueError("Need at least 2 skills to combine")
-        
+
         # Generate new skill name
         new_name = self._generate_skill_name(skill_names, goal)
-        
+
         # Synthesize actions
         synthesized_actions = self._synthesize_actions(skills)
-        
+
         # Calculate scores
         novelty = self._calculate_novelty(new_name, skills)
         usefulness = self._calculate_usefulness(skills)
-        
+
         synthesized = SynthesizedSkill(
             name=new_name,
             parent_skills=skill_names,
@@ -115,37 +116,37 @@ class SkillSynthesizer:
             novelty_score=novelty,
             usefulness_score=usefulness
         )
-        
+
         self.synthesized_skills[new_name] = synthesized
         return synthesized
-    
-    def _generate_skill_name(self, skill_names: List[str], goal: str = None) -> str:
+
+    def _generate_skill_name(self, skill_names: list[str], goal: str = None) -> str:
         """Generate name for synthesized skill."""
         if goal:
             return goal
-        
+
         # Intelligent naming based on combination
         if "pour_liquid" in skill_names and "navigate" in skill_names:
             if "detect_spill" in skill_names:
                 return "serve_drink_carefully"
             return "deliver_liquid"
-        
+
         if "grasp_object" in skill_names and "navigate" in skill_names:
             if "avoid_obstacle" in skill_names:
                 return "fetch_and_deliver_safely"
             return "fetch_and_deliver"
-        
+
         # Default: combine names
         return "_and_".join(skill_names[:2])
-    
-    def _synthesize_actions(self, skills: List[Skill]) -> List[Action]:
+
+    def _synthesize_actions(self, skills: list[Skill]) -> list[Action]:
         """Intelligently combine actions from multiple skills."""
         synthesized = []
-        
+
         # Interleave actions intelligently
         if len(skills) == 2:
             skill1, skill2 = skills
-            
+
             # Pattern: navigate + action
             if skill2.name == "navigate":
                 synthesized.extend(skill2.actions)
@@ -163,14 +164,14 @@ class SkillSynthesizer:
             # Multiple skills: layer them
             for skill in skills:
                 synthesized.extend(skill.actions)
-        
+
         return synthesized
-    
-    def _calculate_novelty(self, name: str, skills: List[Skill]) -> float:
+
+    def _calculate_novelty(self, name: str, skills: list[Skill]) -> float:
         """Calculate how novel this combination is."""
         if name in self.synthesized_skills:
             return 0.0
-        
+
         # Check if similar combinations exist
         parent_set = set(s.name for s in skills)
         for existing in self.synthesized_skills.values():
@@ -178,27 +179,26 @@ class SkillSynthesizer:
             overlap = len(parent_set & existing_set) / len(parent_set | existing_set)
             if overlap > 0.5:
                 return 0.3
-        
+
         return 0.9
-    
-    def _calculate_usefulness(self, skills: List[Skill]) -> float:
+
+    def _calculate_usefulness(self, skills: list[Skill]) -> float:
         """Calculate how useful this combination is."""
         # More complex skills = more useful
         total_complexity = sum(s.complexity for s in skills)
-        
+
         # Complementary effects = more useful
         all_effects = set()
         for skill in skills:
             all_effects.update(skill.effects)
-        
+
         usefulness = min(1.0, (total_complexity * 0.2) + (len(all_effects) * 0.15))
         return usefulness
-    
-    def auto_discover_combinations(self, max_combinations: int = 5) -> List[SynthesizedSkill]:
+
+    def auto_discover_combinations(self, max_combinations: int = 5) -> list[SynthesizedSkill]:
         """Automatically discover useful skill combinations."""
         discovered = []
-        skill_list = list(self.known_skills.keys())
-        
+
         # Try promising combinations
         promising_pairs = [
             (["pour_liquid", "navigate"], "deliver_liquid"),
@@ -207,18 +207,18 @@ class SkillSynthesizer:
             (["navigate", "avoid_obstacle"], "navigate_safely"),
             (["grasp_object", "detect_spill"], "careful_handling")
         ]
-        
+
         for skills, goal in promising_pairs[:max_combinations]:
             if all(s in self.known_skills for s in skills):
                 try:
                     synthesized = self.combine(skills, goal)
                     discovered.append(synthesized)
-                except:
+                except Exception:
                     pass
-        
+
         return discovered
-    
-    def get_synthesis_stats(self) -> Dict[str, Any]:
+
+    def get_synthesis_stats(self) -> dict[str, Any]:
         """Get statistics on skill synthesis."""
         return {
             "base_skills": len(self.known_skills),

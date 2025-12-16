@@ -1,7 +1,7 @@
 """Self-Evolving Task Decomposition - Learn tasks by observing humans"""
+import json
 from collections import defaultdict
 from dataclasses import dataclass
-import json
 from typing import Any
 
 
@@ -192,7 +192,7 @@ class SelfEvolvingPlanner:
     def load_learned_tasks(self, filepath: str):
         """Load learned tasks from disk"""
         try:
-            with open(filepath, 'r') as f:
+            with open(filepath) as f:
                 data = json.load(f)
 
             for task_name, task_data in data.items():

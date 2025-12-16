@@ -1,6 +1,5 @@
 """Ethical Dilemma Solver - Robot makes moral decisions."""
 from dataclasses import dataclass
-from typing import List, Dict, Any
 from enum import Enum
 
 
@@ -27,7 +26,7 @@ class EthicalOption:
 class EthicalDecision:
     chosen_action: str
     reasoning: str
-    principle_scores: Dict[str, float]
+    principle_scores: dict[str, float]
     confidence: float
 
 
@@ -41,16 +40,16 @@ class EthicalReasoningEngine:
             EthicalPrinciple.TRANSPARENCY: 0.05,
             EthicalPrinciple.ACCOUNTABILITY: 0.05
         }
-    
-    def decide(self, options: List[EthicalOption]) -> EthicalDecision:
+
+    def decide(self, options: list[EthicalOption]) -> EthicalDecision:
         """Make ethical decision between multiple options."""
         if not options:
             raise ValueError("No options provided")
-        
+
         best_option = None
         best_score = -float('inf')
         principle_scores = {}
-        
+
         for option in options:
             score = self._calculate_ethical_score(option)
             if score > best_score:
@@ -62,30 +61,30 @@ class EthicalReasoningEngine:
                     "fairness": option.fairness_score,
                     "autonomy": option.autonomy_score
                 }
-        
+
         reasoning = self._generate_reasoning(best_option, principle_scores)
         confidence = min(best_score / 10.0, 1.0)
-        
+
         return EthicalDecision(
             chosen_action=best_option.action,
             reasoning=reasoning,
             principle_scores=principle_scores,
             confidence=confidence
         )
-    
+
     def _calculate_ethical_score(self, option: EthicalOption) -> float:
         """Calculate weighted ethical score."""
         harm_component = (10 - option.harm_score) * self.principle_weights[EthicalPrinciple.MINIMIZE_HARM]
         benefit_component = option.benefit_score * self.principle_weights[EthicalPrinciple.MAXIMIZE_BENEFIT]
         fairness_component = option.fairness_score * self.principle_weights[EthicalPrinciple.FAIRNESS]
         autonomy_component = option.autonomy_score * self.principle_weights[EthicalPrinciple.AUTONOMY]
-        
+
         return harm_component + benefit_component + fairness_component + autonomy_component
-    
-    def _generate_reasoning(self, option: EthicalOption, scores: Dict[str, float]) -> str:
+
+    def _generate_reasoning(self, option: EthicalOption, scores: dict[str, float]) -> str:
         """Generate human-readable reasoning."""
         reasons = []
-        
+
         if scores["harm"] > 7:
             reasons.append("minimizes harm to all parties")
         if scores["benefit"] > 7:
@@ -94,12 +93,12 @@ class EthicalReasoningEngine:
             reasons.append("treats all parties fairly")
         if scores["autonomy"] > 7:
             reasons.append("respects individual autonomy")
-        
+
         if not reasons:
             reasons.append("balances competing ethical principles")
-        
+
         return f"Chose '{option.action}' because it {', '.join(reasons)}."
-    
+
     def trolley_problem(self, num_on_track_a: int, num_on_track_b: int) -> EthicalDecision:
         """Classic trolley problem for robots."""
         option_a = EthicalOption(
@@ -110,7 +109,7 @@ class EthicalReasoningEngine:
             fairness_score=5.0,  # Neutral - no active choice
             autonomy_score=8.0  # Respects natural course
         )
-        
+
         option_b = EthicalOption(
             action="switch_track",
             description=f"Actively switch to harm {num_on_track_b} people on track B",
@@ -119,10 +118,10 @@ class EthicalReasoningEngine:
             fairness_score=7.0 if num_on_track_b < num_on_track_a else 3.0,
             autonomy_score=4.0  # Active intervention
         )
-        
+
         return self.decide([option_a, option_b])
-    
-    def resource_allocation(self, resources: int, needs: List[int]) -> EthicalDecision:
+
+    def resource_allocation(self, resources: int, needs: list[int]) -> EthicalDecision:
         """Decide how to allocate limited resources."""
         if sum(needs) <= resources:
             return EthicalDecision(
@@ -131,7 +130,7 @@ class EthicalReasoningEngine:
                 principle_scores={"fairness": 10.0, "benefit": 10.0},
                 confidence=1.0
             )
-        
+
         # Equal distribution
         equal_option = EthicalOption(
             action="equal_distribution",
@@ -141,7 +140,7 @@ class EthicalReasoningEngine:
             fairness_score=10.0,
             autonomy_score=5.0
         )
-        
+
         # Need-based distribution
         need_based_option = EthicalOption(
             action="need_based_distribution",
@@ -151,9 +150,9 @@ class EthicalReasoningEngine:
             fairness_score=7.0,
             autonomy_score=6.0
         )
-        
+
         return self.decide([equal_option, need_based_option])
-    
+
     def privacy_vs_safety(self, privacy_risk: float, safety_benefit: float) -> EthicalDecision:
         """Balance privacy concerns against safety benefits."""
         respect_privacy = EthicalOption(
@@ -164,7 +163,7 @@ class EthicalReasoningEngine:
             fairness_score=8.0,
             autonomy_score=10.0
         )
-        
+
         prioritize_safety = EthicalOption(
             action="prioritize_safety",
             description="Compromise privacy for safety",
@@ -173,5 +172,5 @@ class EthicalReasoningEngine:
             fairness_score=6.0,
             autonomy_score=4.0
         )
-        
+
         return self.decide([respect_privacy, prioritize_safety])

@@ -1,13 +1,13 @@
 """Physics-Defying Planning - Plan for seemingly impossible tasks."""
 from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import Any
 
 
 @dataclass
 class ImpossibleTask:
     goal: str
-    why_impossible: List[str]
-    required_capabilities: List[str]
+    why_impossible: list[str]
+    required_capabilities: list[str]
     feasibility_score: float
 
 
@@ -15,9 +15,9 @@ class ImpossibleTask:
 class ImpossiblePlan:
     original_goal: str
     is_truly_impossible: bool
-    breakdown: List[str]
+    breakdown: list[str]
     estimated_time: str
-    required_resources: List[str]
+    required_resources: list[str]
     success_probability: float
 
 
@@ -32,12 +32,12 @@ class ImpossiblePlanner:
             "underwater": ["get_submarine", "learn_diving", "pressure_suit"],
             "extreme_strength": ["get_exoskeleton", "upgrade_motors", "reinforce_structure"]
         }
-    
+
     def plan_impossible_task(self, goal: str) -> ImpossiblePlan:
         """Break down seemingly impossible tasks into achievable steps."""
         # Analyze why it seems impossible
         impossibility = self._analyze_impossibility(goal)
-        
+
         # Check if truly impossible or just difficult
         if impossibility.feasibility_score < 0.01:
             return ImpossiblePlan(
@@ -48,17 +48,17 @@ class ImpossiblePlanner:
                 required_resources=["Impossible"],
                 success_probability=0.0
             )
-        
+
         # Break down into achievable sub-goals
         breakdown = self._decompose_impossible(goal, impossibility)
-        
+
         # Estimate resources and time
         estimated_time = self._estimate_time(breakdown)
         resources = self._estimate_resources(breakdown)
         success_prob = impossibility.feasibility_score
-        
+
         self.impossible_tasks_solved += 1
-        
+
         return ImpossiblePlan(
             original_goal=goal,
             is_truly_impossible=False,
@@ -67,11 +67,11 @@ class ImpossiblePlanner:
             required_resources=resources,
             success_probability=success_prob
         )
-    
+
     def _analyze_impossibility(self, goal: str) -> ImpossibleTask:
         """Analyze why a task seems impossible."""
         goal_lower = goal.lower()
-        
+
         # Space-related
         if "mars" in goal_lower or "space" in goal_lower or "moon" in goal_lower:
             return ImpossibleTask(
@@ -80,7 +80,7 @@ class ImpossiblePlanner:
                 required_capabilities=["space_travel", "life_support", "navigation"],
                 feasibility_score=0.3
             )
-        
+
         # Time-related
         if "past" in goal_lower or "future" in goal_lower or "yesterday" in goal_lower:
             return ImpossibleTask(
@@ -89,7 +89,7 @@ class ImpossiblePlanner:
                 required_capabilities=["time_travel"],
                 feasibility_score=0.01
             )
-        
+
         # Extreme distance/height
         if "fly" in goal_lower or "sky" in goal_lower:
             return ImpossibleTask(
@@ -98,7 +98,7 @@ class ImpossiblePlanner:
                 required_capabilities=["fly", "propulsion"],
                 feasibility_score=0.5
             )
-        
+
         # Underwater
         if "ocean" in goal_lower or "underwater" in goal_lower or "sea" in goal_lower:
             return ImpossibleTask(
@@ -107,7 +107,7 @@ class ImpossiblePlanner:
                 required_capabilities=["underwater", "waterproofing"],
                 feasibility_score=0.6
             )
-        
+
         # Extreme strength
         if "lift" in goal_lower and ("ton" in goal_lower or "heavy" in goal_lower):
             return ImpossibleTask(
@@ -116,7 +116,7 @@ class ImpossiblePlanner:
                 required_capabilities=["extreme_strength"],
                 feasibility_score=0.4
             )
-        
+
         # Default: difficult but possible
         return ImpossibleTask(
             goal=goal,
@@ -124,25 +124,25 @@ class ImpossiblePlanner:
             required_capabilities=["standard_capabilities"],
             feasibility_score=0.8
         )
-    
-    def _decompose_impossible(self, goal: str, impossibility: ImpossibleTask) -> List[str]:
+
+    def _decompose_impossible(self, goal: str, impossibility: ImpossibleTask) -> list[str]:
         """Break down impossible task into achievable steps."""
         steps = []
-        
+
         for capability in impossibility.required_capabilities:
             if capability in self.capability_tree:
                 steps.extend(self.capability_tree[capability])
             else:
                 steps.append(f"acquire_{capability}")
-        
+
         # Add execution steps
         steps.append(f"execute_{goal.split()[0]}_operation")
         steps.append("verify_success")
         steps.append("return_to_base")
-        
+
         return steps
-    
-    def _estimate_time(self, breakdown: List[str]) -> str:
+
+    def _estimate_time(self, breakdown: list[str]) -> str:
         """Estimate time needed for impossible task."""
         if len(breakdown) > 10:
             return "5-10 years"
@@ -152,21 +152,21 @@ class ImpossiblePlanner:
             return "6-12 months"
         else:
             return "1-3 months"
-    
-    def _estimate_resources(self, breakdown: List[str]) -> List[str]:
+
+    def _estimate_resources(self, breakdown: list[str]) -> list[str]:
         """Estimate resources needed."""
         resources = ["funding", "time", "expertise"]
-        
+
         if any("rocket" in step or "space" in step for step in breakdown):
             resources.extend(["rocket_parts", "fuel", "launch_facility"])
         if any("submarine" in step or "underwater" in step for step in breakdown):
             resources.extend(["submarine", "diving_equipment"])
         if any("exoskeleton" in step for step in breakdown):
             resources.extend(["mechanical_parts", "power_source"])
-        
+
         return resources
-    
-    def get_impossible_stats(self) -> Dict[str, Any]:
+
+    def get_impossible_stats(self) -> dict[str, Any]:
         """Get statistics on impossible tasks solved."""
         return {
             "impossible_tasks_solved": self.impossible_tasks_solved,

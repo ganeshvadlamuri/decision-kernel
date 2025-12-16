@@ -1,6 +1,6 @@
 """Cross-Species Learning - Learn from animal behaviors."""
 from dataclasses import dataclass
-from typing import Dict, List
+
 from brain.planner.actions import Action
 
 
@@ -9,12 +9,12 @@ class AnimalBehavior:
     species: str
     behavior: str
     principle: str
-    robot_translation: List[Action]
+    robot_translation: list[Action]
 
 
 class CrossSpeciesLearning:
     def __init__(self):
-        self.behaviors: Dict[str, Dict[str, AnimalBehavior]] = {
+        self.behaviors: dict[str, dict[str, AnimalBehavior]] = {
             "dog": {
                 "obstacle_avoidance": AnimalBehavior(
                     species="dog",
@@ -84,28 +84,28 @@ class CrossSpeciesLearning:
                 )
             }
         }
-    
-    def learn_from_animal_behavior(self, species: str, behavior: str) -> List[Action]:
+
+    def learn_from_animal_behavior(self, species: str, behavior: str) -> list[Action]:
         """Learn from animal behavior and translate to robot actions."""
         if species not in self.behaviors:
             raise ValueError(f"Unknown species: {species}")
         if behavior not in self.behaviors[species]:
             raise ValueError(f"Unknown behavior for {species}: {behavior}")
-        
+
         animal_behavior = self.behaviors[species][behavior]
         return animal_behavior.robot_translation
-    
+
     def get_principle(self, species: str, behavior: str) -> str:
         """Get the underlying principle of an animal behavior."""
         if species in self.behaviors and behavior in self.behaviors[species]:
             return self.behaviors[species][behavior].principle
         return ""
-    
-    def list_species(self) -> List[str]:
+
+    def list_species(self) -> list[str]:
         """List all available species."""
         return list(self.behaviors.keys())
-    
-    def list_behaviors(self, species: str) -> List[str]:
+
+    def list_behaviors(self, species: str) -> list[str]:
         """List all behaviors for a species."""
         if species in self.behaviors:
             return list(self.behaviors[species].keys())

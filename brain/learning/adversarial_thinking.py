@@ -1,6 +1,7 @@
 """Adversarial Thinking - Predict what could go wrong and plan defenses."""
 from dataclasses import dataclass
-from typing import List, Dict, Any
+from typing import Any
+
 from brain.planner.actions import Action
 
 
@@ -10,14 +11,14 @@ class Threat:
     description: str
     probability: float
     severity: float
-    affected_actions: List[int]
+    affected_actions: list[int]
 
 
 @dataclass
 class Countermeasure:
     threat: str
     strategy: str
-    backup_actions: List[Action]
+    backup_actions: list[Action]
     risk_reduction: float
 
 
@@ -32,22 +33,22 @@ class AdversarialPlanner:
         }
         self.threats_predicted = 0
         self.countermeasures_generated = 0
-    
-    def predict_threats(self, plan: List[Action], context: Dict[str, Any] = None) -> List[Threat]:
+
+    def predict_threats(self, plan: list[Action], context: dict[str, Any] = None) -> list[Threat]:
         """Predict what could go wrong with a plan."""
         threats = []
         context = context or {}
-        
+
         for i, action in enumerate(plan):
             action_type = action.action_type
-            
+
             # Get potential threats for this action type
             if action_type in self.threat_database:
                 for threat_type in self.threat_database[action_type]:
                     threat = self._analyze_threat(threat_type, action, i, context)
                     if threat.probability > 0.1:
                         threats.append(threat)
-            
+
             # Environmental threats
             if context.get("crowded"):
                 threats.append(Threat(
@@ -57,7 +58,7 @@ class AdversarialPlanner:
                     severity=0.8,
                     affected_actions=[i]
                 ))
-            
+
             if context.get("low_battery"):
                 threats.append(Threat(
                     threat_type="battery_dies",
@@ -66,16 +67,16 @@ class AdversarialPlanner:
                     severity=0.9,
                     affected_actions=list(range(i, len(plan)))
                 ))
-        
+
         self.threats_predicted += len(threats)
         return threats
-    
-    def _analyze_threat(self, threat_type: str, action: Action, 
-                       action_idx: int, context: Dict[str, Any]) -> Threat:
+
+    def _analyze_threat(self, threat_type: str, action: Action,
+                       action_idx: int, context: dict[str, Any]) -> Threat:
         """Analyze specific threat probability and severity."""
         base_probability = 0.2
         severity = 0.5
-        
+
         # Adjust based on context
         if threat_type == "human_trips" and context.get("crowded"):
             base_probability = 0.5
@@ -92,7 +93,7 @@ class AdversarialPlanner:
         elif threat_type == "spill" and action.action_type == "pour":
             base_probability = 0.3
             severity = 0.6
-        
+
         return Threat(
             threat_type=threat_type,
             description=self._get_threat_description(threat_type),
@@ -100,7 +101,7 @@ class AdversarialPlanner:
             severity=severity,
             affected_actions=[action_idx]
         )
-    
+
     def _get_threat_description(self, threat_type: str) -> str:
         """Get human-readable threat description."""
         descriptions = {
@@ -122,27 +123,27 @@ class AdversarialPlanner:
             "motor_failure": "Motor might fail"
         }
         return descriptions.get(threat_type, "Unknown threat")
-    
-    def generate_backup_plans(self, threats: List[Threat], 
-                             original_plan: List[Action]) -> List[Countermeasure]:
+
+    def generate_backup_plans(self, threats: list[Threat],
+                             original_plan: list[Action]) -> list[Countermeasure]:
         """Generate countermeasures for identified threats."""
         countermeasures = []
-        
+
         for threat in threats:
             if threat.probability * threat.severity > 0.3:  # High risk
                 countermeasure = self._create_countermeasure(threat, original_plan)
                 countermeasures.append(countermeasure)
-        
+
         self.countermeasures_generated += len(countermeasures)
         return countermeasures
-    
-    def _create_countermeasure(self, threat: Threat, 
-                              original_plan: List[Action]) -> Countermeasure:
+
+    def _create_countermeasure(self, threat: Threat,
+                              original_plan: list[Action]) -> Countermeasure:
         """Create specific countermeasure for a threat."""
         backup_actions = []
         strategy = ""
         risk_reduction = 0.0
-        
+
         if threat.threat_type == "human_trips":
             strategy = "Announce presence and slow down"
             backup_actions = [
@@ -151,7 +152,7 @@ class AdversarialPlanner:
                 Action(action_type="monitor_humans", parameters={"distance": 2.0})
             ]
             risk_reduction = 0.6
-        
+
         elif threat.threat_type == "object_breaks":
             strategy = "Use softer grip and slower movements"
             backup_actions = [
@@ -160,7 +161,7 @@ class AdversarialPlanner:
                 Action(action_type="support_from_bottom", parameters={})
             ]
             risk_reduction = 0.7
-        
+
         elif threat.threat_type == "battery_dies":
             strategy = "Charge immediately before continuing"
             backup_actions = [
@@ -169,7 +170,7 @@ class AdversarialPlanner:
                 Action(action_type="resume_plan", parameters={})
             ]
             risk_reduction = 0.9
-        
+
         elif threat.threat_type == "spill":
             strategy = "Pour slowly with spill detection"
             backup_actions = [
@@ -178,7 +179,7 @@ class AdversarialPlanner:
                 Action(action_type="monitor_spill", parameters={})
             ]
             risk_reduction = 0.5
-        
+
         elif threat.threat_type == "floor_slippery":
             strategy = "Navigate carefully with traction control"
             backup_actions = [
@@ -187,7 +188,7 @@ class AdversarialPlanner:
                 Action(action_type="test_surface", parameters={})
             ]
             risk_reduction = 0.6
-        
+
         else:
             strategy = "Monitor and pause if threat materializes"
             backup_actions = [
@@ -195,15 +196,15 @@ class AdversarialPlanner:
                 Action(action_type="pause_if_detected", parameters={})
             ]
             risk_reduction = 0.4
-        
+
         return Countermeasure(
             threat=threat.threat_type,
             strategy=strategy,
             backup_actions=backup_actions,
             risk_reduction=risk_reduction
         )
-    
-    def get_adversarial_stats(self) -> Dict[str, Any]:
+
+    def get_adversarial_stats(self) -> dict[str, Any]:
         """Get statistics on adversarial thinking."""
         return {
             "threats_predicted": self.threats_predicted,
