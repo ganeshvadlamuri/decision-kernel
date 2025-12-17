@@ -51,11 +51,16 @@ class CommonSenseReasoner:
                         "suggestion": self._get_suggestion(rule.rule),
                     })
 
+        highest_priority = 0.0
+        if violations:
+            priorities = [float(v["priority"]) for v in violations]
+            highest_priority = max(priorities)
+
         return {
             "action": action,
             "violations": violations,
             "safe": len(violations) == 0,
-            "highest_priority_violation": max((v["priority"] for v in violations), default=0.0) if violations else 0.0,
+            "highest_priority_violation": highest_priority,
         }
 
     def should_avoid(self, action: str, context: dict[str, Any]) -> bool:

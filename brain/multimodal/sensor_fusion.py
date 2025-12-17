@@ -8,7 +8,7 @@ class SensorFusion:
 
     def fuse(self, vision: dict[str, Any], audio: dict[str, Any], touch: dict[str, Any]) -> dict[str, Any]:
         """Fuse multiple sensor modalities."""
-        fused = {
+        fused: dict[str, Any] = {
             "confidence": 0.0,
             "object_detected": False,
             "object_properties": {},
@@ -21,8 +21,9 @@ class SensorFusion:
         if vision.get("object_detected"):
             evidence_count += 1
             total_confidence += vision.get("confidence", 0.5)
-            properties: dict[str, Any] = vision.get("properties", {})
-            fused["object_properties"].update(properties)
+            vision_properties = vision.get("properties", {})
+            if isinstance(vision_properties, dict):
+                fused["object_properties"].update(vision_properties)
 
         if audio.get("sound_detected"):
             evidence_count += 1
