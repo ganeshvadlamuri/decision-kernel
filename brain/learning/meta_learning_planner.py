@@ -37,7 +37,7 @@ class MetaLearningPlanner:
         )
         self.performance_history.append(metric)
 
-    def analyze_performance(self) -> dict[str, float]:
+    def analyze_performance(self) -> dict[str, Any]:
         """Analyze performance trends."""
         if len(self.performance_history) < 10:
             return {"status": "insufficient_data", "bottleneck": "none", "avg_planning_time": 0.0, "avg_quality": 0.0, "avg_success_rate": 0.0}
@@ -55,10 +55,10 @@ class MetaLearningPlanner:
             "bottleneck": bottleneck
         }
 
-    def generate_optimization(self, bottleneck: float | str) -> CodeOptimization:
-        if isinstance(bottleneck, float):
-            bottleneck = "none"
+    def generate_optimization(self, bottleneck: Any) -> CodeOptimization:
         """Generate code optimization based on bottleneck."""
+        if not isinstance(bottleneck, str):
+            bottleneck = "none"
         optimizations = {
             "speed": CodeOptimization(
                 optimization_type="caching",

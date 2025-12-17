@@ -64,7 +64,7 @@ class EmotionalIntelligence:
             Emotion.ANXIOUS: BehaviorMode.CAUTIOUS
         }
 
-        self.mode_parameters = {
+        self.mode_parameters: dict[BehaviorMode, dict[str, Any]] = {
             BehaviorMode.GENTLE: {
                 'speed_multiplier': 0.5,
                 'noise_reduction': 0.8,

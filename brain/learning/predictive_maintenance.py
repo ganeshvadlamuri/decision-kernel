@@ -195,9 +195,9 @@ class PredictiveMaintenanceSystem:
         avg_drift = sum(r.drift for r in recent_readings) / len(recent_readings)
 
         model = self.failure_models.get(component, {})
-        critical_drift = model.get('critical_drift', 0.15)
+        critical_drift = float(model.get('critical_drift', 0.15))
 
-        return min(avg_drift / critical_drift, 1.0)
+        return float(min(avg_drift / critical_drift, 1.0))
 
     def predict_failure(self, component: str, hours_ahead: int = 24) -> float:
         """Predict failure probability for component"""

@@ -175,11 +175,11 @@ class QuantumPlanner:
 
         # Consider variance in duration
         durations = [o['duration'] for o in outcomes]
-        avg_duration = sum(durations) / len(durations)
-        variance = sum((d - avg_duration) ** 2 for d in durations) / len(durations)
-        duration_risk = min(variance / 100.0, 0.5)  # Normalize
+        avg_duration = float(sum(durations) / len(durations))
+        variance = float(sum((d - avg_duration) ** 2 for d in durations) / len(durations))
+        duration_risk = float(min(variance / 100.0, 0.5))  # Normalize
 
-        return failure_rate * 0.7 + duration_risk * 0.3
+        return float(failure_rate * 0.7 + duration_risk * 0.3)
 
     def _identify_failure_points(self, outcomes: list[dict[str, Any]]) -> list[int]:
         """Identify action indices where failures commonly occur"""
