@@ -1,7 +1,8 @@
 """Retry mechanisms with exponential backoff and adaptive strategies."""
 
 import time
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 from .exceptions import PermanentException, TransientException
 

@@ -1,7 +1,8 @@
 """Circuit breaker pattern to prevent cascading failures."""
 
 import time
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 
 class CircuitBreaker:

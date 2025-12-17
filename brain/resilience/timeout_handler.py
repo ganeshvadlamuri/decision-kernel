@@ -1,7 +1,8 @@
 """Timeout handling for long-running operations."""
 
 import time
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 
 class TimeoutHandler:

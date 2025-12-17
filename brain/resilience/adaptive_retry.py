@@ -1,6 +1,6 @@
 """Adaptive retry that changes strategy on each attempt."""
 
-from typing import Any, Callable
+from typing import Any
 
 
 class AdaptiveRetry:

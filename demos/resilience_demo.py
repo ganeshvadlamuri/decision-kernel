@@ -1,6 +1,5 @@
 """Demo of resilience and error handling capabilities."""
 
-import random
 import time
 
 from brain.resilience import (
