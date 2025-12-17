@@ -26,7 +26,7 @@ class RetryMechanism:
         self, action: Callable[[], Any], action_name: str = "action"
     ) -> dict[str, Any]:
         """Execute action with exponential backoff retry."""
-        last_error = None
+        last_error: TransientException | Exception | None = None
 
         for attempt in range(self.max_attempts):
             try:
@@ -44,12 +44,7 @@ class RetryMechanism:
                     "error_type": "permanent",
                     "attempts": attempt + 1,
                 }
-            except TransientException as e:
-                last_error = e
-                if attempt < self.max_attempts - 1:
-                    delay = self._calculate_delay(attempt)
-                    time.sleep(delay)
-            except Exception as e:
+            except (TransientException, Exception) as e:
                 last_error = e
                 if attempt < self.max_attempts - 1:
                     delay = self._calculate_delay(attempt)

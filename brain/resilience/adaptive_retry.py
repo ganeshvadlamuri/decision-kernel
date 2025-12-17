@@ -7,7 +7,7 @@ class AdaptiveRetry:
     """Try different strategies on each retry attempt."""
 
     def __init__(self) -> None:
-        self.strategy_history: dict[str, list[bool]] = {}
+        self.strategy_history: dict[str, dict[str, list[bool]]] = {}
 
     def execute_with_strategies(
         self, action_name: str, strategies: list[dict[str, Any]]
