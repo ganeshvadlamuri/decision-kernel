@@ -67,7 +67,7 @@ Action (bring/greet/entertain/emotional_support/explore/navigate/grasp): """
                     "help": "collaborate",
                     "question": "answer_question"
                 }
-                
+
                 # Find matching action
                 for key, action in action_map.items():
                     if key in llm_output:
@@ -82,7 +82,7 @@ Action (bring/greet/entertain/emotional_support/explore/navigate/grasp): """
                             target = "joke"
                         elif action == "greet":
                             target = "human"
-                        
+
                         return Goal(action=action, target=target, location=None)
         except Exception:
             pass  # Silent fallback to rules
