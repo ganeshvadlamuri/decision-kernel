@@ -116,7 +116,88 @@ Safety: PASS
 
 ## Revolutionary Advanced Learning (v1.0+)
 
-Decision Kernel includes **19 revolutionary AI capabilities** that no other robotics system has combined. Each feature represents a breakthrough in autonomous intelligence:
+Decision Kernel includes **19 revolutionary AI capabilities** + **50 functional capabilities** that no other robotics system has combined. Each feature represents a breakthrough in autonomous intelligence:
+
+### 50 Functional Capabilities
+
+Decision Kernel now includes 50 production-ready functional capabilities across 10 categories:
+
+**1. Memory & Learning (5 features)**
+- **Episodic Memory**: Remember specific past events ("last time I did X, Y happened")
+- **Semantic Memory**: Build knowledge graph (kitchen → has → coffee maker)
+- **Working Memory**: Track current context across multiple commands
+- **Memory Consolidation**: Compress old memories, keep important ones
+- **Forgetting Mechanism**: Delete outdated/wrong information
+
+**2. Advanced Reasoning (5 features)**
+- **Causal Reasoning**: Understand cause-effect ("if I push cup, it falls")
+- **Analogical Reasoning**: Apply solutions from similar problems
+- **Abductive Reasoning**: Infer best explanation ("floor wet → probably spill")
+- **Common Sense Reasoning**: Know implicit rules ("don't vacuum while human sleeps")
+- **Spatial Reasoning**: Understand 3D relationships ("behind", "inside", "next to")
+
+**3. Natural Language (5 features)**
+- **Context Understanding**: Resolve "bring it here" (what is "it"? where is "here"?)
+- **Ambiguity Resolution**: Handle "get the cup" (which cup?)
+- **Clarification Questions**: Ask when confused
+- **Multi-turn Dialogue**: Remember conversation history
+- **Implicit Commands**: "I'm thirsty" → bring water
+
+**4. Goal Management (5 features)**
+- **Goal Prioritization**: Urgent vs important
+- **Goal Interruption**: Pause task, handle emergency, resume
+- **Goal Decomposition**: Break complex goals into subgoals
+- **Goal Conflict Resolution**: "clean room" vs "don't wake baby"
+- **Goal Abandonment**: Know when to give up
+
+**5. Uncertainty Handling (5 features)**
+- **Probabilistic Planning**: Plan under uncertainty
+- **Belief Tracking**: Maintain probability distributions
+- **Information Gathering**: Know what you don't know, ask/explore
+- **Confidence Estimation**: "I'm 60% sure this will work"
+- **Graceful Degradation**: Partial success when full success impossible
+
+**6. Social Intelligence (5 features)**
+- **Theory of Mind**: Model what human knows/wants/believes
+- **Perspective Taking**: See situation from human's viewpoint
+- **Social Norms**: Learn cultural rules (personal space, politeness)
+- **Deception Detection**: Recognize when human is joking/lying
+- **Collaboration**: Work together, not just follow orders
+
+**7. Adaptation (5 features)**
+- **Online Learning**: Update models during execution
+- **Failure Recovery**: Detect failure, diagnose, retry differently
+- **Strategy Switching**: Try different approaches when stuck
+- **Performance Optimization**: Get faster at repeated tasks
+- **Environment Adaptation**: Adjust to new homes/layouts
+
+**8. Meta-Cognition (5 features)**
+- **Self-Monitoring**: Know when you're confused/stuck
+- **Confidence Calibration**: Accurate self-assessment
+- **Explanation Generation**: "I did X because Y"
+- **Introspection**: Examine own decision process
+- **Learning to Learn**: Improve learning efficiency
+
+**9. Multi-Modal Integration (5 features)**
+- **Sensor Fusion**: Combine vision + audio + touch
+- **Cross-Modal Learning**: "red" (vision) = "apple" (word) = "crunchy" (sound)
+- **Attention Mechanism**: Focus on relevant inputs
+- **Surprise Detection**: Notice unexpected events
+- **Anomaly Detection**: "This doesn't look right"
+
+**10. Long-Horizon Planning (5 features)**
+- **Hierarchical Planning**: High-level strategy + low-level tactics
+- **Contingency Planning**: Backup plans for failures
+- **Resource Management**: Track battery, time, materials
+- **Deadline Awareness**: "Must finish by 3 PM"
+- **Interruptible Execution**: Pause/resume long tasks
+
+**Try the functional capabilities demo:**
+```bash
+python -m demos.functional_capabilities_demo
+```
+
+### 19 Revolutionary AI Capabilities
 
 ### Core Intelligence
 
