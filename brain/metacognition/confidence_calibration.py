@@ -1,7 +1,5 @@
 """Confidence calibration - Accurate self-assessment."""
 
-from typing import Any
-
 
 class ConfidenceCalibrator:
     """Accurate self-assessment."""

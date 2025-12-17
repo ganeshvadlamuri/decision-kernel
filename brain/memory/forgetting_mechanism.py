@@ -1,10 +1,10 @@
 """Forgetting mechanism - Delete outdated/wrong information."""
 
 import math
-from datetime import datetime, timedelta
+from datetime import datetime
 from typing import Any
 
-from .episodic_memory import Episode, EpisodicMemory
+from .episodic_memory import EpisodicMemory
 from .semantic_memory import KnowledgeTriple, SemanticMemory
 
 
