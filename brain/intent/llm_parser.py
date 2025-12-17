@@ -31,13 +31,9 @@ class LLMIntentParser:
         """Use Ollama/Llama to understand intent"""
         import requests  # type: ignore
 
-        # Ultra-short prompt for speed
-        prompt = f"""Convert to JSON:
-"{text}"
-
-thirsty->bring water, funny->entertain joke, hi->greet, stressed->emotional_support
-
-JSON:"""
+        # Ultra-minimal prompt for speed
+        prompt = f"""Command: {text}
+Action (bring/greet/entertain/emotional_support/explore/navigate/grasp): """
 
         try:
             response = requests.post(
@@ -47,30 +43,49 @@ JSON:"""
                     "prompt": prompt,
                     "stream": False,
                     "options": {
-                        "temperature": 0.1,
-                        "num_predict": 50  # Limit output length for speed
+                        "temperature": 0.0,
+                        "num_predict": 10,  # Very short output
+                        "top_k": 1  # Greedy decoding for speed
                     }
                 },
-                timeout=5  # Shorter timeout
+                timeout=10
             )
 
             if response.status_code == 200:
                 result = response.json()
-                llm_output = result.get("response", "")
+                llm_output = result.get("response", "").strip().lower()
 
-                # Parse JSON from LLM
-                import json
-                import re
-                json_match = re.search(r'\{.*\}', llm_output, re.DOTALL)
-                if json_match:
-                    parsed = json.loads(json_match.group())
-                    return Goal(
-                        action=parsed.get("action", "respond"),
-                        target=parsed.get("target"),
-                        location=parsed.get("location")
-                    )
-        except Exception as e:
-            print(f"LLM error: {e}")
+                # Parse simple action word from LLM
+                action_map = {
+                    "bring": "bring",
+                    "greet": "greet",
+                    "entertain": "entertain",
+                    "emotional": "emotional_support",
+                    "explore": "explore",
+                    "navigate": "navigate",
+                    "grasp": "grasp",
+                    "help": "collaborate",
+                    "question": "answer_question"
+                }
+                
+                # Find matching action
+                for key, action in action_map.items():
+                    if key in llm_output:
+                        # Infer target based on action
+                        target = None
+                        if action == "bring":
+                            if "thirst" in text.lower() or "water" in text.lower():
+                                target = "water"
+                            elif "hungry" in text.lower() or "food" in text.lower():
+                                target = "food"
+                        elif action == "entertain":
+                            target = "joke"
+                        elif action == "greet":
+                            target = "human"
+                        
+                        return Goal(action=action, target=target, location=None)
+        except Exception:
+            pass  # Silent fallback to rules
 
         # Fallback
         return self._parse_rule_based(text)
