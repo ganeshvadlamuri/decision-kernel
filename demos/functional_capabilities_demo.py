@@ -2,35 +2,95 @@
 
 from datetime import datetime, timedelta
 
-# Memory & Learning
-from brain.memory import EpisodicMemory, SemanticMemory, WorkingMemory, MemoryConsolidator, ForgettingMechanism
-
-# Advanced Reasoning
-from brain.reasoning import CausalReasoner, AnalogicalReasoner, AbductiveReasoner, CommonSenseReasoner, SpatialReasoner
-
-# Natural Language
-from brain.language import ContextUnderstanding, AmbiguityResolver, ClarificationEngine, DialogueManager, ImplicitCommandParser
+# Adaptation
+from brain.adaptation import (
+    EnvironmentAdapter,
+    FailureRecovery,
+    OnlineLearner,
+    PerformanceOptimizer,
+    StrategySwitcher,
+)
 
 # Goal Management
-from brain.goals import GoalPrioritizer, GoalInterruptionManager, GoalDecomposer, GoalConflictResolver, GoalAbandonmentDecider
+from brain.goals import (
+    GoalAbandonmentDecider,
+    GoalConflictResolver,
+    GoalDecomposer,
+    GoalInterruptionManager,
+    GoalPrioritizer,
+)
 
-# Uncertainty Handling
-from brain.uncertainty import ProbabilisticPlanner, BeliefTracker, InformationGatherer, ConfidenceEstimator, GracefulDegradation
+# Natural Language
+from brain.language import (
+    AmbiguityResolver,
+    ClarificationEngine,
+    ContextUnderstanding,
+    DialogueManager,
+    ImplicitCommandParser,
+)
 
-# Social Intelligence
-from brain.social import TheoryOfMind, PerspectiveTaker, SocialNormsLearner, DeceptionDetector, CollaborationEngine
-
-# Adaptation
-from brain.adaptation import OnlineLearner, FailureRecovery, StrategySwitcher, PerformanceOptimizer, EnvironmentAdapter
+# Memory & Learning
+from brain.memory import (
+    EpisodicMemory,
+    ForgettingMechanism,
+    MemoryConsolidator,
+    SemanticMemory,
+    WorkingMemory,
+)
 
 # Meta-Cognition
-from brain.metacognition import SelfMonitor, ConfidenceCalibrator, ExplanationGenerator, Introspector, MetaLearner
+from brain.metacognition import (
+    ConfidenceCalibrator,
+    ExplanationGenerator,
+    Introspector,
+    MetaLearner,
+    SelfMonitor,
+)
 
 # Multi-Modal Integration
-from brain.multimodal import SensorFusion, CrossModalLearner, AttentionMechanism, SurpriseDetector, AnomalyDetector
+from brain.multimodal import (
+    AnomalyDetector,
+    AttentionMechanism,
+    CrossModalLearner,
+    SensorFusion,
+    SurpriseDetector,
+)
 
 # Long-Horizon Planning
-from brain.planning import HierarchicalPlanner, ContingencyPlanner, ResourceManager, DeadlineManager, InterruptibleExecutor
+from brain.planning import (
+    ContingencyPlanner,
+    DeadlineManager,
+    HierarchicalPlanner,
+    InterruptibleExecutor,
+    ResourceManager,
+)
+
+# Advanced Reasoning
+from brain.reasoning import (
+    AbductiveReasoner,
+    AnalogicalReasoner,
+    CausalReasoner,
+    CommonSenseReasoner,
+    SpatialReasoner,
+)
+
+# Social Intelligence
+from brain.social import (
+    CollaborationEngine,
+    DeceptionDetector,
+    PerspectiveTaker,
+    SocialNormsLearner,
+    TheoryOfMind,
+)
+
+# Uncertainty Handling
+from brain.uncertainty import (
+    BeliefTracker,
+    ConfidenceEstimator,
+    GracefulDegradation,
+    InformationGatherer,
+    ProbabilisticPlanner,
+)
 
 
 def demo_memory_learning() -> None:
@@ -194,7 +254,7 @@ def demo_goal_management() -> None:
     print("\n[Goal Interruption] Pause, handle emergency, resume")
     interrupter = GoalInterruptionManager()
     interrupter.pause_goal("clean_room", {"progress": 0.5}, ["vacuum_floor"])
-    print(f"  Paused: clean_room")
+    print("  Paused: clean_room")
     resumed = interrupter.resume_goal()
     print(f"  Resumed: {resumed.goal} (progress: {resumed.progress['progress']*100:.0f}%)")
 
