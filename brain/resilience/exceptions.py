@@ -1,7 +1,7 @@
 """Robot-specific exceptions for error handling."""
 
 
-class RobotException(Exception):
+class RobotException(Exception):  # noqa: N818
     """Base exception for all robot errors."""
 
     pass
