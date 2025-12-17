@@ -1,11 +1,17 @@
 """Train all ML models with open-source datasets."""
 
 import sys
-from pathlib import Path
 
-# Check PyTorch availability
 try:
     import torch
+
+    from brain.ml.training import (
+        IntentTransformerTrainer,
+        MetaLearnerTrainer,
+        NeuralPolicyTrainer,
+        VisionLanguageTrainer,
+    )
+
     print(f"✅ PyTorch {torch.__version__} detected")
 except ImportError:
     print("❌ PyTorch not installed!")
@@ -13,13 +19,6 @@ except ImportError:
     print("  pip install torch torchvision")
     print("  pip install datasets transformers")
     sys.exit(1)
-
-from brain.ml.training import (
-    IntentTransformerTrainer,
-    NeuralPolicyTrainer,
-    VisionLanguageTrainer,
-    MetaLearnerTrainer,
-)
 
 
 def main() -> None:
@@ -33,9 +32,9 @@ def main() -> None:
     print("  3. Vision-Language Model (COCO captions)")
     print("  4. Meta-Learner (synthetic few-shot tasks)")
     print("\n" + "=" * 80)
-    
+
     results = {}
-    
+
     # 1. Intent Transformer
     print("\n\n📝 [1/4] TRAINING INTENT TRANSFORMER")
     print("-" * 80)
@@ -45,7 +44,7 @@ def main() -> None:
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["intent"] = {"error": str(e)}
-    
+
     # 2. Neural Policy
     print("\n\n🤖 [2/4] TRAINING NEURAL POLICY")
     print("-" * 80)
@@ -55,7 +54,7 @@ def main() -> None:
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["policy"] = {"error": str(e)}
-    
+
     # 3. Vision-Language Model
     print("\n\n👁️ [3/4] TRAINING VISION-LANGUAGE MODEL")
     print("-" * 80)
@@ -65,7 +64,7 @@ def main() -> None:
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["vision_language"] = {"error": str(e)}
-    
+
     # 4. Meta-Learner
     print("\n\n🧠 [4/4] TRAINING META-LEARNER")
     print("-" * 80)
@@ -75,12 +74,12 @@ def main() -> None:
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["meta"] = {"error": str(e)}
-    
+
     # Summary
     print("\n\n" + "=" * 80)
     print("📊 TRAINING SUMMARY")
     print("=" * 80)
-    
+
     for model_name, result in results.items():
         print(f"\n{model_name.upper()}:")
         if "error" in result:
@@ -88,7 +87,7 @@ def main() -> None:
         else:
             for key, value in result.items():
                 print(f"  {key}: {value}")
-    
+
     print("\n✅ Training complete! Models saved to models/ directory")
     print("\nNext steps:")
     print("  1. Test models: python -m demos.ml_models_demo")
