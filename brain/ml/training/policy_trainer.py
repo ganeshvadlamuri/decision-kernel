@@ -57,7 +57,7 @@ class NeuralPolicyTrainer:
         self.model_path = Path(model_path)
         self.model_path.parent.mkdir(parents=True, exist_ok=True)
 
-    def generate_synthetic_data(self, num_samples: int = 10000) -> tuple[np.ndarray, np.ndarray]:
+    def generate_synthetic_data(self, num_samples: int = 50000) -> tuple[np.ndarray, np.ndarray]:
         """Generate synthetic robot demonstrations."""
         print(f"🤖 Generating {num_samples} synthetic demonstrations...")
 
@@ -88,7 +88,7 @@ class NeuralPolicyTrainer:
     def train(self, epochs: int = 20, batch_size: int = 64, lr: float = 0.001) -> dict[str, Any]:
         """Train policy network via imitation learning."""
         # Generate data
-        states, actions = self.generate_synthetic_data(num_samples=10000)
+        states, actions = self.generate_synthetic_data(num_samples=50000)
 
         # Create dataset
         dataset = PolicyDataset(states, actions)

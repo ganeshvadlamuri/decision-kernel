@@ -27,50 +27,51 @@ def main() -> None:
     print("🚀 DECISION KERNEL - ML MODEL TRAINING")
     print("=" * 80)
     print("\nTraining 4 revolutionary ML models on open-source datasets:")
-    print("  1. Intent Transformer (daily_dialog dataset)")
-    print("  2. Neural Policy (synthetic robot demonstrations)")
-    print("  3. Vision-Language Model (COCO captions)")
-    print("  4. Meta-Learner (synthetic few-shot tasks)")
+    print("  1. Intent Transformer (daily_dialog dataset) - 50 EPOCHS")
+    print("  2. Neural Policy (synthetic robot demonstrations) - 100 EPOCHS")
+    print("  3. Vision-Language Model (COCO captions) - 50 EPOCHS")
+    print("  4. Meta-Learner (synthetic few-shot tasks) - 500 EPOCHS")
+    print("\n⚠️  INTENSIVE TRAINING MODE - This will take longer!")
     print("\n" + "=" * 80)
 
     results = {}
 
     # 1. Intent Transformer
-    print("\n\n📝 [1/4] TRAINING INTENT TRANSFORMER")
+    print("\n\n📝 [1/4] TRAINING INTENT TRANSFORMER (50 EPOCHS)")
     print("-" * 80)
     try:
         trainer = IntentTransformerTrainer()
-        results["intent"] = trainer.train(epochs=10, batch_size=32)
+        results["intent"] = trainer.train(epochs=50, batch_size=32)
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["intent"] = {"error": str(e)}
 
     # 2. Neural Policy
-    print("\n\n🤖 [2/4] TRAINING NEURAL POLICY")
+    print("\n\n🤖 [2/4] TRAINING NEURAL POLICY (100 EPOCHS)")
     print("-" * 80)
     try:
         trainer = NeuralPolicyTrainer()
-        results["policy"] = trainer.train(epochs=20, batch_size=64)
+        results["policy"] = trainer.train(epochs=100, batch_size=64)
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["policy"] = {"error": str(e)}
 
     # 3. Vision-Language Model
-    print("\n\n👁️ [3/4] TRAINING VISION-LANGUAGE MODEL")
+    print("\n\n👁️ [3/4] TRAINING VISION-LANGUAGE MODEL (50 EPOCHS)")
     print("-" * 80)
     try:
         trainer = VisionLanguageTrainer()
-        results["vision_language"] = trainer.train(epochs=15, batch_size=32)
+        results["vision_language"] = trainer.train(epochs=50, batch_size=32)
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["vision_language"] = {"error": str(e)}
 
     # 4. Meta-Learner
-    print("\n\n🧠 [4/4] TRAINING META-LEARNER")
+    print("\n\n🧠 [4/4] TRAINING META-LEARNER (500 EPOCHS)")
     print("-" * 80)
     try:
         trainer = MetaLearnerTrainer()
-        results["meta"] = trainer.train(epochs=100, num_tasks=1000)
+        results["meta"] = trainer.train(epochs=500, num_tasks=5000)
     except Exception as e:
         print(f"❌ Failed: {e}")
         results["meta"] = {"error": str(e)}

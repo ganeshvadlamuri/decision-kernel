@@ -89,8 +89,8 @@ class VisionLanguageTrainer:
         """Download COCO captions dataset."""
         print("📥 Downloading COCO captions dataset...")
 
-        # Use HuggingFace COCO dataset (smaller subset)
-        dataset = load_dataset("HuggingFaceM4/COCO", split="train[:1000]")
+        # Use HuggingFace COCO dataset (larger subset)
+        dataset = load_dataset("HuggingFaceM4/COCO", split="train[:5000]")
 
         images = []
         captions = []

@@ -74,7 +74,7 @@ class IntentTransformerTrainer:
     def download_dataset(self) -> tuple[list[str], list[str]]:
         """Download daily_dialog dataset from HuggingFace."""
         print("📥 Downloading daily_dialog dataset...")
-        dataset = load_dataset("daily_dialog", split="train[:5000]")  # 5K samples
+        dataset = load_dataset("daily_dialog", split="train[:20000]")  # 20K samples
 
         texts = []
         intents = []
