@@ -30,7 +30,7 @@ def demo_analogical_reasoning() -> None:
     }
 
     result = reasoner.solve_novel_problem(problem)
-    print(f"Problem: Transport book to library")
+    print("Problem: Transport book to library")
     print(f"Solution found: {result['success']}")
     print(f"Adapted from: {result.get('source_case', 'N/A')}")
     print(f"Confidence: {result.get('confidence', 0):.0%}")
@@ -52,7 +52,7 @@ def demo_constraint_relaxation() -> None:
     ]
 
     result = relaxer.plan_with_relaxation(goal, constraints)
-    print(f"Goal: Transport package from A to B")
+    print("Goal: Transport package from A to B")
     print(f"Success: {result['success']}")
     print(f"Message: {result['message']}")
     print(f"Relaxed: {len(result['relaxed_constraints'])} constraints")
@@ -72,7 +72,7 @@ def demo_tool_improvisation() -> None:
     ]
 
     result = improviser.find_alternative_tool("cut", available)
-    print(f"Need: Cut paper (no scissors available)")
+    print("Need: Cut paper (no scissors available)")
     print(f"Found alternative: {result['success']}")
     if result["success"]:
         alt = result["alternative"]
@@ -114,7 +114,7 @@ def demo_causal_reasoning() -> None:
     context = {"object_near_edge": True, "object_fragile": True}
 
     result = reasoner.predict_outcome(action, context)
-    print(f"Action: Push cup near edge")
+    print("Action: Push cup near edge")
     print(f"Causal chain: {len(result['causal_chain'])} events")
     print(f"Risks identified: {len(result['risks'])}")
     if result["risks"]:
@@ -155,7 +155,7 @@ def demo_hypothesis_testing() -> None:
     situation = {"type": "object_not_found", "object": "keys", "usual_location": "table"}
 
     result = tester.explore_unknown(situation)
-    print(f"Situation: Keys not found")
+    print("Situation: Keys not found")
     print(f"Success: {result['success']}")
     print(f"Experiments run: {result['experiments_run']}")
     if result["success"]:
@@ -196,7 +196,7 @@ def demo_serendipity_engine() -> None:
     }
 
     result = engine.detect_opportunities(state)
-    print(f"Current: Getting water in kitchen")
+    print("Current: Getting water in kitchen")
     print(f"Opportunities found: {result['opportunities_found']}")
     for opp in result["opportunities"]:
         print(f"  - {opp['description']}")
@@ -211,14 +211,14 @@ def demo_conceptual_blending() -> None:
     blender = ConceptualBlending()
 
     result = blender.blend_concepts("vacuum_cleaner", "lawn_mower")
-    print(f"Blending: vacuum_cleaner + lawn_mower")
+    print("Blending: vacuum_cleaner + lawn_mower")
     print(f"Success: {result['success']}")
     if result["success"]:
         concept = result["new_concept"]
         print(f"New concept: {concept['name']}")
         print(f"Novelty: {concept['novelty_score']:.0%}")
         print(f"Capabilities: {len(concept['capabilities'])}")
-        print(f"Applications:")
+        print("Applications:")
         for app in concept["practical_applications"]:
             print(f"  - {app}")
 
