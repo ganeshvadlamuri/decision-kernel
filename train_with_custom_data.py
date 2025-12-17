@@ -5,8 +5,7 @@ from pathlib import Path
 
 try:
     import torch
-    import torch.nn as nn
-    from torch.utils.data import DataLoader, Dataset
+    from torch.utils.data import Dataset
 except ImportError:
     print("❌ PyTorch not installed! Run: pip install -r requirements-ml.txt")
     exit(1)
