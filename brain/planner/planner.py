@@ -103,11 +103,11 @@ class Planner:
 
         # Entertainment
         if goal.action == "entertain":
-            if "dance" in goal.target:
+            if goal.target and "dance" in goal.target:
                 return [Action("speak", target="I would dance, but I'm a robot brain without legs!")]
-            elif "joke" in goal.target:
+            elif goal.target and "joke" in goal.target:
                 return [Action("speak", target="Why did the robot go to therapy? It had too many bugs!")]
-            elif "sing" in goal.target:
+            elif goal.target and "sing" in goal.target:
                 return [Action("speak", target="Beep boop beep, I'm a robot so sweet!")]
             else:
                 return [Action("speak", target="I'd love to entertain you! What would you like me to do?")]
@@ -118,9 +118,9 @@ class Planner:
 
         # Emotional Response
         if goal.action == "emotional_response":
-            if "love" in goal.target:
+            if goal.target and "love" in goal.target:
                 return [Action("speak", target="I care about helping you and making your life easier!")]
-            elif "friend" in goal.target:
+            elif goal.target and "friend" in goal.target:
                 return [Action("speak", target="I'd be honored to be your friend! I'm here to help anytime.")]
             else:
                 return [Action("speak", target="I appreciate you too!")]

@@ -12,7 +12,7 @@ class LLMIntentParser:
 
         if use_llm:
             try:
-                import requests
+                import requests  # type: ignore
                 # Check if Ollama is running
                 response = requests.get("http://localhost:11434/api/tags", timeout=1)
                 self.llm_available = response.status_code == 200
@@ -29,7 +29,7 @@ class LLMIntentParser:
 
     def _parse_with_llm(self, text: str) -> Goal:
         """Use Ollama/Llama to understand intent"""
-        import requests
+        import requests  # type: ignore
 
         prompt = f"""You are a robot assistant. Parse this command into a structured action.
 
