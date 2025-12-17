@@ -1,10 +1,10 @@
 """Social intelligence for Decision Kernel."""
 
-from .theory_of_mind import TheoryOfMind
+from .collaboration import CollaborationEngine
+from .deception_detection import DeceptionDetector
 from .perspective_taking import PerspectiveTaker
 from .social_norms import SocialNormsLearner
-from .deception_detection import DeceptionDetector
-from .collaboration import CollaborationEngine
+from .theory_of_mind import TheoryOfMind
 
 __all__ = [
     "TheoryOfMind",

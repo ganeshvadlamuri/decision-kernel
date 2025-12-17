@@ -1,7 +1,7 @@
 """Anomaly detection - Detect unusual patterns."""
 
-from typing import Any
 import statistics
+from typing import Any
 
 
 class AnomalyDetector:

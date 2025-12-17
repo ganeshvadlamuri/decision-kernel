@@ -1,7 +1,6 @@
 """Abductive reasoning - Infer best explanation."""
 
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass

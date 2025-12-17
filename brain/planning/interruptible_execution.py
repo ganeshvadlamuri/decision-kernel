@@ -1,7 +1,6 @@
 """Interruptible execution - Pause/resume long tasks."""
 
 from dataclasses import dataclass
-from typing import Any
 
 
 @dataclass

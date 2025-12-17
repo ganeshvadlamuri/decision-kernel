@@ -1,8 +1,8 @@
 """Spatial reasoning - Understand 3D relationships."""
 
+import math
 from dataclasses import dataclass
 from typing import Any
-import math
 
 
 @dataclass

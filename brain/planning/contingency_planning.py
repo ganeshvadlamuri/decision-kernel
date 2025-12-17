@@ -1,6 +1,5 @@
 """Contingency planning - Backup plans for failures."""
 
-from typing import Any
 
 
 class ContingencyPlanner:

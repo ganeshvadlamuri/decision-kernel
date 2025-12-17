@@ -1,6 +1,5 @@
 """Belief tracking - Maintain probability distributions."""
 
-from typing import Any
 
 
 class BeliefTracker:
