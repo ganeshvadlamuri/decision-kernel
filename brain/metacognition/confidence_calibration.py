@@ -17,7 +17,7 @@ class ConfidenceCalibrator:
             return 0.0
 
         # Group by confidence bins
-        bins = {i: [] for i in range(10)}
+        bins: dict[int, list[float]] = {i: [] for i in range(10)}
         for conf, success in self.predictions:
             bin_idx = min(int(conf * 10), 9)
             bins[bin_idx].append(1.0 if success else 0.0)

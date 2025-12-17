@@ -127,7 +127,7 @@ class SpatialReasoner:
         if obj not in self.objects:
             return {}
 
-        relations = {
+        relations: dict[str, Any] = {
             "next_to": [],
             "inside": [],
             "on_top_of": [],

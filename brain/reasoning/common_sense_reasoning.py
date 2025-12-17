@@ -22,7 +22,7 @@ class CommonSenseReasoner:
 
     def _init_common_rules(self) -> None:
         """Initialize common sense rules."""
-        rules = [
+        rules: list[tuple[str, dict[str, Any], float]] = [
             ("don't_make_noise_when_human_sleeping", {"time": "night", "human_state": "sleeping"}, 0.95),
             ("don't_block_doorways", {"location": "doorway"}, 0.90),
             ("don't_touch_hot_objects", {"object_temp": "hot"}, 0.95),
@@ -55,13 +55,14 @@ class CommonSenseReasoner:
             "action": action,
             "violations": violations,
             "safe": len(violations) == 0,
-            "highest_priority_violation": max((v["priority"] for v in violations), default=0.0),
+            "highest_priority_violation": max((v["priority"] for v in violations), default=0.0) if violations else 0.0,
         }
 
     def should_avoid(self, action: str, context: dict[str, Any]) -> bool:
         """Check if action should be avoided."""
         result = self.check_action(action, context)
-        return result["highest_priority_violation"] > 0.7
+        priority: float = result["highest_priority_violation"]
+        return priority > 0.7
 
     def add_rule(self, rule: str, context: dict[str, Any], priority: float) -> None:
         """Add new common sense rule."""

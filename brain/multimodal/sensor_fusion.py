@@ -21,7 +21,8 @@ class SensorFusion:
         if vision.get("object_detected"):
             evidence_count += 1
             total_confidence += vision.get("confidence", 0.5)
-            fused["object_properties"].update(vision.get("properties", {}))
+            properties: dict[str, Any] = vision.get("properties", {})
+            fused["object_properties"].update(properties)
 
         if audio.get("sound_detected"):
             evidence_count += 1
