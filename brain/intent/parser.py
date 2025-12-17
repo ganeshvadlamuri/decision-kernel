@@ -26,19 +26,19 @@ class IntentParser:
             return Goal(action="explain", target=self._extract_object(text))
 
         # Greetings variations
-        if "whats up" in text or "what's up" in text or "sup" in text or "wassup" in text:
+        if any(word in text for word in ["whats up", "what's up", "sup", "wassup", "howdy", "yo"]):
             return Goal(action="status_report", target="self")
 
         # Emotional Intelligence
-        if "stressed" in text or "tired" in text or "angry" in text or "sad" in text:
+        if any(word in text for word in ["stressed", "tired", "angry", "sad", "upset", "anxious", "worried", "depressed", "exhausted"]):
             return Goal(action="emotional_support", target="human")
 
         # Thirst detection (with synonyms)
-        if "thirsty" in text or "dying of thirst" in text or "need water" in text or "parched" in text:
+        if any(word in text for word in ["thirsty", "dying of thirst", "need water", "parched", "dehydrated", "need a drink", "get me water"]):
             return Goal(action="bring", target="water", recipient="human")
 
         # Hunger detection (with synonyms)
-        if "hungry" in text or "starving" in text or "need food" in text:
+        if any(word in text for word in ["hungry", "starving", "need food", "famished", "need to eat", "get me food"]):
             return Goal(action="bring", target="food", recipient="human")
 
         # Learning & Training
@@ -93,8 +93,14 @@ class IntentParser:
             return Goal(action="emergency_stop")
 
         # Basic tasks
-        if "bring" in text:
+        if "bring" in text or "can i have" in text or "please" in text and ("water" in text or "food" in text):
             target = self._extract_object(text)
+            if not target or target == "unknown":
+                # Try to infer from context
+                if "water" in text:
+                    target = "water"
+                elif "food" in text:
+                    target = "food"
             return Goal(action="bring", target=target, recipient="human")
 
         if "clean" in text and "room" in text:
@@ -116,7 +122,7 @@ class IntentParser:
             return Goal(action="wait", target="pause")
 
         # Entertainment & Fun
-        if "dance" in text or "sing" in text or "joke" in text or "play" in text or "funny" in text or "laugh" in text:
+        if any(word in text for word in ["dance", "sing", "joke", "play", "funny", "laugh", "entertain", "amuse", "cheer me up", "do something fun", "have fun"]):
             return Goal(action="entertain", target=text)
 
         # Capability questions
