@@ -1,8 +1,8 @@
 """Demo: Powerful Intent Understanding - All 79 Features"""
 
 from brain.kernel import RobotBrainKernel
-from brain.world.state import WorldState
 from brain.world.objects import WorldObject
+from brain.world.state import WorldState
 
 
 def create_world() -> WorldState:
@@ -24,7 +24,7 @@ def test_command(kernel: RobotBrainKernel, world: WorldState, command: str, cate
     print(f"Category: {category}")
     print(f"Command: '{command}'")
     print(f"{'-'*70}")
-    
+
     try:
         plan = kernel.process(command, world)
         print(f"Plan ({len(plan)} actions):")
@@ -39,10 +39,10 @@ def main():
     print("DECISION KERNEL - POWERFUL INTENT UNDERSTANDING DEMO")
     print("="*70)
     print("\nTesting all revolutionary AI capabilities...")
-    
+
     kernel = RobotBrainKernel()
     world = create_world()
-    
+
     # Test cases covering all features
     test_cases = [
         # Social & Communication (5 tests)
@@ -51,30 +51,30 @@ def main():
         ("how are you", "Social - Status Check"),
         ("thank you", "Social - Gratitude"),
         ("what is this", "Social - Questions"),
-        
+
         # Emotional Intelligence (4 tests)
         ("I'm stressed", "Emotional - Stress Detection"),
         ("I'm tired", "Emotional - Fatigue Detection"),
         ("I'm thirsty", "Emotional - Implicit Need (thirsty)"),
         ("I'm hungry", "Emotional - Implicit Need (hungry)"),
-        
+
         # Learning & Self-Improvement (3 tests)
         ("learn this task", "Learning - Task Learning"),
         ("practice navigation", "Learning - Self Practice"),
         ("improve your performance", "Learning - Self Optimization"),
-        
+
         # Exploration & Curiosity (2 tests)
         ("explore kitchen", "Curiosity - Exploration"),
         ("discover new areas", "Curiosity - Discovery"),
-        
+
         # Prediction & Planning (2 tests)
         ("predict what will happen", "Prediction - Future Simulation"),
         ("plan for tomorrow", "Planning - Long-term Planning"),
-        
+
         # Collaboration & Negotiation (2 tests)
         ("help me with this", "Collaboration - Assistance"),
         ("negotiate a solution", "Negotiation - Conflict Resolution"),
-        
+
         # Basic Tasks (8 tests)
         ("bring me water", "Basic - Bring Object"),
         ("clean room", "Basic - Clean Area"),
@@ -84,14 +84,14 @@ def main():
         ("wait here", "Basic - Wait"),
         ("charge yourself", "Basic - Charging"),
         ("make coffee", "Complex - Multi-step Task"),
-        
+
         # Emergency (1 test)
         ("emergency stop", "Emergency - Halt"),
     ]
-    
+
     for command, category in test_cases:
         test_command(kernel, world, command, category)
-    
+
     print(f"\n{'='*70}")
     print("SUMMARY")
     print(f"{'='*70}")

@@ -5,11 +5,11 @@ from brain.intent.schema import Goal
 
 class LLMIntentParser:
     """Parse intents using open-source LLM (Ollama/Llama)"""
-    
+
     def __init__(self, use_llm: bool = True):
         self.use_llm = use_llm
         self.llm_available = False
-        
+
         if use_llm:
             try:
                 import requests
@@ -18,19 +18,19 @@ class LLMIntentParser:
                 self.llm_available = response.status_code == 200
             except Exception:
                 self.llm_available = False
-    
+
     def parse(self, human_input: str) -> Goal:
         """Parse using LLM if available, fallback to rule-based"""
-        
+
         if self.llm_available:
             return self._parse_with_llm(human_input)
         else:
             return self._parse_rule_based(human_input)
-    
+
     def _parse_with_llm(self, text: str) -> Goal:
         """Use Ollama/Llama to understand intent"""
         import requests
-        
+
         prompt = f"""You are a robot assistant. Parse this command into a structured action.
 
 Command: "{text}"
@@ -60,11 +60,11 @@ JSON:"""
                 },
                 timeout=5
             )
-            
+
             if response.status_code == 200:
                 result = response.json()
                 llm_output = result.get("response", "")
-                
+
                 # Parse JSON from LLM
                 import json
                 import re
@@ -78,10 +78,10 @@ JSON:"""
                     )
         except Exception as e:
             print(f"LLM error: {e}")
-        
+
         # Fallback
         return self._parse_rule_based(text)
-    
+
     def _parse_rule_based(self, text: str) -> Goal:
         """Fallback to rule-based parsing"""
         from brain.intent.parser import IntentParser

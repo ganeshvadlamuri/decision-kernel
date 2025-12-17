@@ -7,9 +7,9 @@ def main():
     print("="*70)
     print("LLM-POWERED INTENT UNDERSTANDING DEMO")
     print("="*70)
-    
+
     parser = LLMIntentParser(use_llm=True)
-    
+
     if not parser.llm_available:
         print("\nOllama not detected. Install it:")
         print("  1. Visit: https://ollama.com/download")
@@ -19,7 +19,7 @@ def main():
         print("\nFalling back to rule-based parser for now...\n")
     else:
         print("\nLLM detected! Using Ollama for intelligent parsing.\n")
-    
+
     # Test cases that rule-based parser struggles with
     test_cases = [
         "yo robot, grab me that thing over there",
@@ -31,15 +31,15 @@ def main():
         "what's good robot",
         "bring water",  # Simple case
     ]
-    
+
     print("Testing challenging commands:\n")
-    
+
     for command in test_cases:
         print(f"Command: '{command}'")
         goal = parser.parse(command)
         print(f"  -> action={goal.action}, target={goal.target}, location={goal.location}")
         print()
-    
+
     print("="*70)
     print("SUMMARY")
     print("="*70)
