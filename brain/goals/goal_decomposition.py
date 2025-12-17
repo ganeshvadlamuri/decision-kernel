@@ -1,7 +1,5 @@
 """Goal decomposition - Break complex goals into subgoals."""
 
-from typing import Any
-
 
 class GoalDecomposer:
     """Break complex goals into subgoals."""

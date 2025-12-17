@@ -1,7 +1,5 @@
 """Online learning - Update models during execution."""
 
-from typing import Any
-
 
 class OnlineLearner:
     """Update models during execution."""

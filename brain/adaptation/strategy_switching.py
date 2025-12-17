@@ -1,7 +1,5 @@
 """Strategy switching - Try different approaches when stuck."""
 
-from typing import Any
-
 
 class StrategySwitcher:
     """Try different approaches when stuck."""

@@ -1,7 +1,5 @@
 """Failure recovery - Detect, diagnose, retry differently."""
 
-from typing import Any
-
 
 class FailureRecovery:
     """Detect failure, diagnose, retry differently."""
