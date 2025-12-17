@@ -256,6 +256,57 @@ Decision Kernel now includes 10 creative thinking features that enable true "out
 python -m demos.creative_thinking_demo
 ```
 
+### 6 Pathfinding Algorithms (NEW!)
+
+Decision Kernel now includes 6 pathfinding algorithms for low-level motion planning (used by adapters):
+
+**1. A* (A-Star)** ⭐
+- Optimal path with heuristic (Manhattan distance)
+- Fast and efficient for grid-based navigation
+- Example: Finds 19-step path avoiding obstacles
+
+**2. Dijkstra's Algorithm** 📊
+- Optimal path without heuristic
+- Guaranteed shortest path
+- Example: Same optimal result as A* but explores more nodes
+
+**3. Breadth-First Search (BFS)** 🌊
+- Unweighted shortest path
+- Simple and reliable
+- Example: Optimal for uniform cost grids
+
+**4. Depth-First Search (DFS)** 🔍
+- Memory efficient exploration
+- Not optimal but fast
+- Example: Finds path quickly but may not be shortest
+
+**5. Greedy Best-First Search** ⚡
+- Fast heuristic-based search
+- Not always optimal but quick
+- Example: Rushes toward goal using heuristic
+
+**6. RRT (Rapidly-exploring Random Tree)** 🌳
+- For complex/high-dimensional spaces
+- Probabilistically complete
+- Example: Good for robots with many degrees of freedom
+
+**Try the pathfinding demo:**
+```bash
+python -m demos.pathfinding_demo
+```
+
+**Use in adapters:**
+```python
+from brain.pathfinding import AStar
+
+# In your adapter's navigate_to implementation
+astar = AStar()
+result = astar.find_path(start=(0,0), goal=(9,9), grid=obstacle_map)
+if result['success']:
+    for position in result['path']:
+        robot.move_to(position)
+```
+
 ### 19 Revolutionary AI Capabilities
 
 ### Core Intelligence
