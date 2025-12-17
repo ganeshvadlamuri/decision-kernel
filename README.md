@@ -13,17 +13,17 @@ A minimal, hardware-agnostic robot brain kernel for autonomous decision-making.
 
 ## v1.0 Released
 
-**Decision Kernel v1.0.0 - The World's Most Advanced Robot Brain**
+**Decision Kernel v1.0.0 - Advanced Robot Decision-Making Framework**
 
-Features 15 revolutionary AI capabilities that no other robotics system has combined. From self-improving algorithms to biological neural integration, Decision Kernel represents the cutting edge of autonomous decision-making.
+Features 19 AI capabilities + 50 functional features + 10 creative thinking modules. From self-improving algorithms to biological neural integration, Decision Kernel demonstrates advanced autonomous decision-making concepts.
 
 ## What It Is
 
 Decision Kernel is a lightweight orchestration layer that processes human intent, evaluates world state, generates action plans, validates safety constraints, and maintains execution memory. It provides a clean separation between decision logic and hardware execution.
 
-## What Makes It Revolutionary
+## Key Capabilities
 
-Decision Kernel is the **world's most advanced robot brain** with capabilities no other system has:
+Decision Kernel includes advanced decision-making capabilities:
 
 - **Self-improving** - Rewrites its own code to get 2x faster
 - **Emotionally intelligent** - Adapts to human stress, anger, happiness
@@ -116,7 +116,7 @@ Safety: PASS
 
 ## Revolutionary Advanced Learning (v1.0+)
 
-Decision Kernel includes **19 revolutionary AI capabilities** + **50 functional capabilities** that no other robotics system has combined. Each feature represents a breakthrough in autonomous intelligence:
+Decision Kernel includes **19 AI capabilities** + **50 functional capabilities** demonstrating advanced autonomous intelligence concepts:
 
 ### 50 Functional Capabilities
 
@@ -459,7 +459,7 @@ if result['success']:
 - ✅ Emergency response protocols
 - ✅ <100ms planning performance
 
-**All 19 features are production-ready with:**
+**All 19 features include:**
 - Full test coverage (127+ tests passing)
 - Type-safe code (mypy verified)
 - Clean code (ruff linting passed)
@@ -487,7 +487,7 @@ prediction = predictor.predict_human_intention(context)
 
 ## ML Model Training (v1.0+)
 
-Train Decision Kernel's 4 revolutionary ML models on open-source datasets:
+Train Decision Kernel's 4 ML models on open-source datasets:
 
 ```bash
 # Install ML dependencies
