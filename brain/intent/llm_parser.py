@@ -31,34 +31,27 @@ class LLMIntentParser:
         """Use Ollama/Llama to understand intent"""
         import requests  # type: ignore
 
-        prompt = f"""You are a robot assistant. Parse this command into a structured action.
+        # Ultra-short prompt for speed
+        prompt = f"""Convert to JSON:
+"{text}"
 
-Command: "{text}"
+thirsty->bring water, funny->entertain joke, hi->greet, stressed->emotional_support
 
-Respond with ONLY a JSON object with these fields:
-- action: one of [bring, clean, navigate, grasp, release, greet, speak, explore, learn_task, emotional_support, entertain, capability_check, answer_question]
-- target: the object/topic (or null)
-- location: the location (or null)
-
-Examples:
-"bring me water" -> {{"action": "bring", "target": "water", "location": null}}
-"hi" -> {{"action": "greet", "target": "human", "location": null}}
-"go to kitchen" -> {{"action": "navigate", "target": null, "location": "kitchen"}}
-"tell me a joke" -> {{"action": "entertain", "target": "joke", "location": null}}
-
-Now parse: "{text}"
 JSON:"""
 
         try:
             response = requests.post(
                 "http://localhost:11434/api/generate",
                 json={
-                    "model": "llama3.2",  # or "mistral", "phi3"
+                    "model": "phi3:mini",  # Faster model
                     "prompt": prompt,
                     "stream": False,
-                    "options": {"temperature": 0.1}
+                    "options": {
+                        "temperature": 0.1,
+                        "num_predict": 50  # Limit output length for speed
+                    }
                 },
-                timeout=5
+                timeout=5  # Shorter timeout
             )
 
             if response.status_code == 200:

@@ -19,20 +19,26 @@ class IntentParser:
             return Goal(action="acknowledge", target="gratitude")
 
         # Questions & Information
-        if text.startswith("what") or text.startswith("where") or text.startswith("when"):
+        if text.startswith("what") or text.startswith("where") or text.startswith("when") or text.startswith("why") or text.startswith("how"):
             return Goal(action="answer_question", target=text)
 
         if "explain" in text or "tell me about" in text:
             return Goal(action="explain", target=self._extract_object(text))
 
+        # Greetings variations
+        if "whats up" in text or "what's up" in text or "sup" in text or "wassup" in text:
+            return Goal(action="status_report", target="self")
+
         # Emotional Intelligence
         if "stressed" in text or "tired" in text or "angry" in text or "sad" in text:
             return Goal(action="emotional_support", target="human")
 
-        if "thirsty" in text:
+        # Thirst detection (with synonyms)
+        if "thirsty" in text or "dying of thirst" in text or "need water" in text or "parched" in text:
             return Goal(action="bring", target="water", recipient="human")
 
-        if "hungry" in text:
+        # Hunger detection (with synonyms)
+        if "hungry" in text or "starving" in text or "need food" in text:
             return Goal(action="bring", target="food", recipient="human")
 
         # Learning & Training
@@ -110,7 +116,7 @@ class IntentParser:
             return Goal(action="wait", target="pause")
 
         # Entertainment & Fun
-        if "dance" in text or "sing" in text or "joke" in text or "play" in text:
+        if "dance" in text or "sing" in text or "joke" in text or "play" in text or "funny" in text or "laugh" in text:
             return Goal(action="entertain", target=text)
 
         # Capability questions
