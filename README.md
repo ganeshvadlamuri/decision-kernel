@@ -197,6 +197,65 @@ Decision Kernel now includes 50 production-ready functional capabilities across 
 python -m demos.functional_capabilities_demo
 ```
 
+### 10 Creative Thinking Features (NEW!)
+
+Decision Kernel now includes 10 creative thinking features that enable true "out-of-the-box" problem solving:
+
+**1. Analogical Reasoning** 🧩
+- Solve new problems by adapting solutions from similar past cases
+- 70%+ confidence when similar case exists
+- Example: "Transport book" → adapts from "bring object" pattern
+
+**2. Constraint Relaxation** 🔓
+- Find creative workarounds by relaxing non-critical constraints
+- Never relaxes safety constraints
+- Example: Can't meet time limit → relaxes cost constraint → finds solution
+
+**3. Tool Improvisation** 🔧
+- Use objects in unexpected ways when standard tools unavailable
+- 80%+ confidence for improvised tools
+- Example: No scissors → use card edge to cut paper
+
+**4. Goal Reframing** 🎯
+- Reinterpret impossible goals by understanding underlying needs
+- 95%+ feasibility for reframed goals
+- Example: "Water from Mars" → "Human thirsty" → "Water from kitchen"
+
+**5. Causal Reasoning** ⚡
+- Predict action outcomes and identify risks before execution
+- Detects high-severity risks with mitigation strategies
+- Example: "Push cup near edge" → predicts fall → suggests moving away first
+
+**6. Meta-Strategy Selection** 🎲
+- Choose optimal thinking approach based on problem type
+- 7 problem classes, 7 specialized strategies
+- Example: Routine problem → cached solution, Impossible → constraint relaxation
+
+**7. Hypothesis Testing** 🔬
+- Apply scientific method to unknown situations
+- 90%+ confidence for best hypothesis
+- Example: Keys missing → tests 3 hypotheses → "moved by human" confirmed
+
+**8. Perspective Shifting** 👁️
+- View problems from multiple angles (human, engineer, child, expert, artist)
+- Synthesizes best solution from 5 perspectives
+- Example: "Clean room" → expert view scores 0.75 (best balance)
+
+**9. Serendipity Engine** ✨
+- Notice unexpected opportunities during task execution
+- Detects low/medium/high priority opportunities
+- Example: Getting water in kitchen → notices dirty dishes → optional goal created
+
+**10. Conceptual Blending** 🌈
+- Combine concepts to generate novel innovations
+- 71%+ novelty score for blended concepts
+- Example: Vacuum + Lawn mower → Autonomous outdoor cleaning robot
+
+**Try the creative thinking demo:**
+```bash
+python -m demos.creative_thinking_demo
+```
+
 ### 19 Revolutionary AI Capabilities
 
 ### Core Intelligence
