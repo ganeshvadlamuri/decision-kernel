@@ -287,7 +287,7 @@ class PredictiveMaintenanceSystem:
             if comp.failure_probability_24h > 0.5
         ]
 
-        avg_health = sum(c.health_score for c in self.components.values()) / len(self.components)
+        avg_health = float(sum(c.health_score for c in self.components.values()) / len(self.components))
 
         return {
             'overall_health': avg_health,

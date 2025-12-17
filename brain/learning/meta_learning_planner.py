@@ -40,21 +40,24 @@ class MetaLearningPlanner:
     def analyze_performance(self) -> dict[str, float]:
         """Analyze performance trends."""
         if len(self.performance_history) < 10:
-            return {"status": "insufficient_data"}
+            return {"status": "insufficient_data", "bottleneck": "none", "avg_planning_time": 0.0, "avg_quality": 0.0, "avg_success_rate": 0.0}
 
         recent = self.performance_history[-10:]
         avg_time = sum(m.planning_time for m in recent) / len(recent)
         avg_quality = sum(m.plan_quality for m in recent) / len(recent)
         avg_success = sum(m.success_rate for m in recent) / len(recent)
 
+        bottleneck = "speed" if avg_time > 0.1 else "quality" if avg_quality < 0.8 else "none"
         return {
             "avg_planning_time": avg_time,
             "avg_quality": avg_quality,
             "avg_success_rate": avg_success,
-            "bottleneck": "speed" if avg_time > 0.1 else "quality" if avg_quality < 0.8 else "none"
+            "bottleneck": bottleneck
         }
 
-    def generate_optimization(self, bottleneck: str) -> CodeOptimization:
+    def generate_optimization(self, bottleneck: float | str) -> CodeOptimization:
+        if isinstance(bottleneck, float):
+            bottleneck = "none"
         """Generate code optimization based on bottleneck."""
         optimizations = {
             "speed": CodeOptimization(

@@ -1,6 +1,7 @@
 """Emotional Intelligence Layer - Adapt behavior based on human emotions"""
 from dataclasses import dataclass
 from enum import Enum
+from typing import Any
 
 from brain.planner.actions import Action
 from brain.world.state import WorldState
@@ -35,7 +36,7 @@ class EmotionalContext:
     intensity: float  # 0.0 to 1.0
     duration: float   # seconds
     triggers: list[str]
-    preferences: dict[str, any]
+    preferences: dict[str, Any]
 
 
 @dataclass

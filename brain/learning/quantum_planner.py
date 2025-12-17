@@ -57,8 +57,8 @@ class QuantumPlanner:
         outcomes = self._simulate_futures(base_plan, state, futures, simulation_depth)
 
         # Analyze outcomes
-        success_prob = sum(1 for o in outcomes if o['success']) / len(outcomes)
-        avg_duration = sum(o['duration'] for o in outcomes) / len(outcomes)
+        success_prob = float(sum(1 for o in outcomes if o['success']) / len(outcomes))
+        avg_duration = float(sum(o['duration'] for o in outcomes) / len(outcomes))
         risk_score = self._calculate_risk(outcomes)
         failure_points = self._identify_failure_points(outcomes)
 

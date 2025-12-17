@@ -65,7 +65,7 @@ class TemporalPlanner:
 
         # Calculate backwards from desired_time
         current_time = desired_time
-        timed_actions = []
+        timed_actions: list[TimedAction] = []
 
         for action_name, target, location, deps in actions_reverse:
             duration = self.action_durations.get(action_name, timedelta(minutes=1))
@@ -97,7 +97,7 @@ class TemporalPlanner:
         ]
 
         current_time = desired_time
-        timed_actions = []
+        timed_actions: list[TimedAction] = []
 
         for action_name, target, location, deps in actions_reverse:
             duration = self.action_durations.get(action_name, timedelta(minutes=1))
@@ -142,7 +142,7 @@ class TemporalPlanner:
     def optimize_timeline(self, plan: TemporalPlan) -> TemporalPlan:
         """Compress timeline by parallelizing independent actions."""
         # Find actions that can run in parallel
-        optimized_actions = []
+        optimized_actions: list[TimedAction] = []
         time_saved = timedelta(0)
 
         for i, action in enumerate(plan.actions):

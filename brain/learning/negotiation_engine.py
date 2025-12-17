@@ -35,7 +35,7 @@ class NegotiationEngine:
 
     def negotiate_with_human(self, human_request: str,
                             robot_constraint: str,
-                            context: dict[str, Any] = None) -> NegotiationResult:
+                            context: dict[str, Any] | None = None) -> NegotiationResult:
         """Negotiate when human request conflicts with robot constraints."""
         context = context or {}
 

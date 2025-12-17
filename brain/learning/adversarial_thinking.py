@@ -34,7 +34,7 @@ class AdversarialPlanner:
         self.threats_predicted = 0
         self.countermeasures_generated = 0
 
-    def predict_threats(self, plan: list[Action], context: dict[str, Any] = None) -> list[Threat]:
+    def predict_threats(self, plan: list[Action], context: dict[str, Any] | None = None) -> list[Threat]:
         """Predict what could go wrong with a plan."""
         threats = []
         context = context or {}

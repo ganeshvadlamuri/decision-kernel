@@ -46,7 +46,7 @@ class EthicalReasoningEngine:
         if not options:
             raise ValueError("No options provided")
 
-        best_option = None
+        best_option: EthicalOption | None = None
         best_score = -float('inf')
         principle_scores = {}
 
@@ -61,6 +61,9 @@ class EthicalReasoningEngine:
                     "fairness": option.fairness_score,
                     "autonomy": option.autonomy_score
                 }
+
+        if best_option is None:
+            raise ValueError("No valid option found")
 
         reasoning = self._generate_reasoning(best_option, principle_scores)
         confidence = min(best_score / 10.0, 1.0)

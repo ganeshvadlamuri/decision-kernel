@@ -82,7 +82,7 @@ class CuriosityEngine:
             expected_learning="General environment awareness"
         )
 
-    def _explore_area(self, goal: ExplorationGoal) -> Discovery:
+    def _explore_area(self, goal: ExplorationGoal) -> Discovery | None:
         """Explore specific area and make discoveries."""
         area = goal.target_area
 

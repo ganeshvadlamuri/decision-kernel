@@ -145,7 +145,7 @@ class SwarmIntelligence:
 
         # Weighted average by confidence and verification count
         total_weight = 0.0
-        aggregated_content = {}
+        aggregated_content: dict[str, Any] = {}
 
         for k in knowledge_list:
             weight = k.confidence * (1 + len(k.verified_by) * 0.1)

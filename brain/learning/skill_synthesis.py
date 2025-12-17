@@ -91,7 +91,7 @@ class SkillSynthesizer:
             )
         }
 
-    def combine(self, skill_names: list[str], goal: str = None) -> SynthesizedSkill:
+    def combine(self, skill_names: list[str], goal: str | None = None) -> SynthesizedSkill:
         """Combine existing skills to create a new one."""
         # Validate skills exist
         skills = [self.known_skills[name] for name in skill_names if name in self.known_skills]
@@ -120,7 +120,7 @@ class SkillSynthesizer:
         self.synthesized_skills[new_name] = synthesized
         return synthesized
 
-    def _generate_skill_name(self, skill_names: list[str], goal: str = None) -> str:
+    def _generate_skill_name(self, skill_names: list[str], goal: str | None = None) -> str:
         """Generate name for synthesized skill."""
         if goal:
             return goal
