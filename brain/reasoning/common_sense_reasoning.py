@@ -53,8 +53,13 @@ class CommonSenseReasoner:
 
         highest_priority = 0.0
         if violations:
-            priorities = [float(v["priority"]) for v in violations]
-            highest_priority = max(priorities)
+            priorities: list[float] = []
+            for v in violations:
+                priority_val = v.get("priority", 0.0)
+                if isinstance(priority_val, (int, float)):
+                    priorities.append(float(priority_val))
+            if priorities:
+                highest_priority = max(priorities)
 
         return {
             "action": action,
