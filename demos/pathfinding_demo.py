@@ -1,6 +1,6 @@
 """Demo of all pathfinding algorithms."""
 
-from brain.pathfinding import AStar, BFS, DFS, Dijkstra, GreedyBestFirst, RRT
+from brain.pathfinding import BFS, DFS, RRT, AStar, Dijkstra, GreedyBestFirst
 
 
 def create_test_grid() -> list[list[int]]:
