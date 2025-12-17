@@ -21,6 +21,58 @@ class Planner:
                 return self._plan_from_skill(skill, goal, world_state)
 
         # Fallback to naive planning
+        # Social & Communication
+        if goal.action == "greet":
+            return [Action("speak", target="Hello! How can I help you?")]
+        
+        if goal.action == "status_report":
+            return [Action("speak", target="I'm operational and ready to assist!")]
+        
+        if goal.action == "acknowledge":
+            return [Action("speak", target="You're welcome!")]
+        
+        if goal.action == "answer_question":
+            return [Action("speak", target=f"Let me help you with: {goal.target}")]
+        
+        if goal.action == "explain":
+            return [Action("speak", target=f"Explaining {goal.target}...")]
+        
+        # Emotional Intelligence
+        if goal.action == "emotional_support":
+            return [
+                Action("speak", target="I understand. Let me help you feel better."),
+                Action("adjust_behavior", target="gentle_mode")
+            ]
+        
+        # Learning & Improvement
+        if goal.action == "learn_task":
+            return [Action("record_demonstration", target=goal.target)]
+        
+        if goal.action == "self_improve":
+            return [Action("analyze_performance", target="self")]
+        
+        # Exploration
+        if goal.action == "explore":
+            return [
+                Action("navigate_to", location=goal.location),
+                Action("scan_environment", location=goal.location)
+            ]
+        
+        # Prediction & Planning
+        if goal.action == "predict_future":
+            return [Action("run_simulation", target=goal.target)]
+        
+        if goal.action == "create_plan":
+            return [Action("generate_plan", target=goal.target)]
+        
+        # Collaboration
+        if goal.action == "collaborate":
+            return [Action("assist_human", target=goal.target)]
+        
+        if goal.action == "negotiate":
+            return [Action("negotiate_solution", target=goal.target)]
+        
+        # Basic Tasks
         if goal.action == "bring":
             return self._plan_bring(goal, world_state)
 
@@ -32,6 +84,50 @@ class Planner:
 
         if goal.action == "grasp":
             return [Action("grasp", target=goal.target)]
+        
+        if goal.action == "release":
+            return [Action("release", target=goal.target)]
+        
+        if goal.action == "wait":
+            return [Action("wait", target="5s")]
+        
+        if goal.action == "charge":
+            return [
+                Action("navigate_to", location="charging_station"),
+                Action("dock", target="charger")
+            ]
+        
+        # Emergency
+        if goal.action == "emergency_stop":
+            return [Action("halt", target="immediate")]
+        
+        # Entertainment
+        if goal.action == "entertain":
+            if "dance" in goal.target:
+                return [Action("speak", target="I would dance, but I'm a robot brain without legs!")]
+            elif "joke" in goal.target:
+                return [Action("speak", target="Why did the robot go to therapy? It had too many bugs!")]
+            elif "sing" in goal.target:
+                return [Action("speak", target="Beep boop beep, I'm a robot so sweet!")]
+            else:
+                return [Action("speak", target="I'd love to entertain you! What would you like me to do?")]
+        
+        # Capability Check
+        if goal.action == "capability_check":
+            return [Action("speak", target=f"Let me check: {goal.target}. I can navigate, grasp objects, learn tasks, and assist you!")]
+        
+        # Emotional Response
+        if goal.action == "emotional_response":
+            if "love" in goal.target:
+                return [Action("speak", target="I care about helping you and making your life easier!")]
+            elif "friend" in goal.target:
+                return [Action("speak", target="I'd be honored to be your friend! I'm here to help anytime.")]
+            else:
+                return [Action("speak", target="I appreciate you too!")]
+        
+        # Smart Fallback - ALWAYS respond
+        if goal.action == "respond":
+            return [Action("speak", target=f"I understand you said: '{goal.target}'. I'm still learning this command. Can you rephrase or try: bring, clean, navigate, explore, or ask a question?")]
 
         return []
 
